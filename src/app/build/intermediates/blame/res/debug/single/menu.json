@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/menu/main.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/menu/main.xml"
+    }
+]

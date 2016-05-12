@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/ic_menu_star.png",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/drawable-mdpi/ic_menu_star.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/logo.png",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/drawable-mdpi/logo.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/ic_menu_archive.png",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/drawable-mdpi/ic_menu_archive.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/ic_menu_archive.png",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/drawable-mdpi/ic_menu_archive.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/logo.png",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/drawable-mdpi/logo.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/ic_menu_star.png",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/drawable-mdpi/ic_menu_star.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/icon.png",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/drawable-mdpi/icon.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/bg_row.9.png",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/drawable-mdpi/bg_row.9.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/icon.png",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/drawable-mdpi/icon.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/bg_header.9.png",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/drawable-mdpi/bg_header.9.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/bg_header.9.png",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/drawable-mdpi/bg_header.9.png"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/bg_row.9.png",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/drawable-mdpi/bg_row.9.png"
+    }
+]

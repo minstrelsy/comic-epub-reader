@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/advanced_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/advanced_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/visual_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/visual_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/preferences.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/preferences.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/about_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/about_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/preference_headers.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/preference_headers.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/advanced_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/advanced_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/preferences.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/preferences.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/premium_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/premium_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/storage_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/storage_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/storage_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/storage_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/control_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/control_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/build/intermediates/res/merged/debug/xml/about_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/droid-comic-viewer-studio/app/src/main/res/xml/about_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/preference_headers.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/preference_headers.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/premium_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/premium_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/control_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/control_settings.xml"
+    },
+    {
+        "merged": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/build/intermediates/res/merged/debug/xml/visual_settings.xml",
+        "source": "/home/nakayama/Dev/Projetos/comic-epub-reader/src/app/src/main/res/xml/visual_settings.xml"
+    }
+]
