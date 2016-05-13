@@ -53,13 +53,13 @@ public class IconPreferenceScreen extends Preference {
         setLayoutResource(R.layout.preference_icon);
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.IconPreferenceScreen, defStyle, 0);
-        mIcon = a.getDrawable(R.styleable.IconPreferenceScreen_icon);
+        mIcon = a.getDrawable(R.styleable.IconPreferenceScreen_icon_preferences);
     }
 
     @Override
     public void onBindView(View view) {
         super.onBindView(view);
-        ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+        ImageView imageView = (ImageView) view.findViewById(R.id.icon_preferences);
         if (imageView != null && mIcon != null) {
             imageView.setImageDrawable(mIcon);
         }

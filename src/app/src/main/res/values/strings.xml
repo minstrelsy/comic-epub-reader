@@ -165,5 +165,22 @@
 	<!-- Changelog -->
 	<string name="dialog_changelog_title">Changelog</string>
 	<string name="changelog_english_only">For practical purposes the changelog is only available in English. Sorry for any inconvenience.</string>
-	
+
+
+    <string name="my_books">My Books</string>
+    <string name="my_movies">My Movies</string>
+    <string name="search">Search</string>
+    <string name="books">Books</string>
+    <string name="movies">Movies</string>
+    <string name="admin">Admin</string>
+    <string name="app_moto">Epub and Comic Reader</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="collections">Collections</string>
+    <string name="settings">Settings</string>
+    <string name="my_comics">My Comics</string>
+    <string name="favorites">Favorites</string>
+    <string name="read">Read</string>
+    <string name="get_books">Get Books</string>
+    <string name="files">Files</string>
 </resources>

@@ -16,10 +16,19 @@
 -->
 <resources>
     <!-- Base application theme is the default theme. -->
-    <style name="Theme" parent="android:Theme.Holo">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:actionBarStyle">@style/Theme.ActionBarStyle</item>
+    <style name="Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
     </style>
+
+	<style name="Theme.NoActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Theme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+	<style name="Theme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 	<style name="Theme.text2b">
 		<item name="android:textSize">14sp</item>
@@ -38,10 +47,6 @@
 	<style name="Theme.tabWidget">
 		<item name="android:gravity">fill_horizontal|center_vertical</item>
 		<item name="android:divider">@android:drawable/divider_horizontal_bright</item>
-	</style>
-
-	<style name="Theme.ActionBarStyle" parent="android:style/Widget.Holo.ActionBar">
-		<item name="android:background">#a6000000</item>
 	</style>
 
 	<!-- List -->

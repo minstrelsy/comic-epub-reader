@@ -23,6 +23,6 @@
 		<attr name="fillViewport" format="boolean"/>
 	</declare-styleable>
 	<declare-styleable name="IconPreferenceScreen">
-		<attr name="icon" format="reference" />
+		<attr name="icon_preferences" format="reference" />
 	</declare-styleable>
 </resources>

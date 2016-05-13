@@ -25,7 +25,7 @@
     android:paddingRight="?android:attr/scrollbarSize"> 
     
     <ImageView 
-        android:id="@+id/icon"
+        android:id="@+id/icon_preferences"
         android:layout_marginLeft="6dip"
         android:layout_marginRight="6dip"
         android:layout_gravity="center" android:layout_height="32dip" android:layout_width="32dip" android:scaleType="fitCenter"/> 

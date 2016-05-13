@@ -26,7 +26,6 @@ import net.robotmedia.acv.adapter.RecentListBaseAdapter;
 import net.robotmedia.acv.comic.Comic;
 import net.robotmedia.acv.logic.*;
 import net.robotmedia.acv.provider.HistoryManager;
-import net.robotmedia.acv.ui.settings.mobile.SettingsActivityMobile;
 import net.robotmedia.acv.ui.settings.tablet.SettingsActivityTablet;
 import net.robotmedia.acv.ui.widget.*;
 import net.robotmedia.acv.utils.*;
@@ -40,15 +39,21 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.*;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
+import android.support.v7.app.AppCompatActivity;
 
-public class ComicViewerActivity extends ExtendedActivity implements OnGestureListener, GestureDetector.OnDoubleTapListener, ComicViewListener {
+public class ComicViewerActivity extends AppCompatActivity implements OnGestureListener, GestureDetector.OnDoubleTapListener, ComicViewListener,
+        NavigationView.OnNavigationItemSelectedListener  {
 
 	public final static String POSITION_EXTRA = "position";
 	
@@ -82,12 +87,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 
 				mScreen.setComic(comic);
 				mScreen.goToScreen(initialIndex);
-				
-				if(isHoneyComb()) {
-					new MenuHelper().invalidateOptionsMenu();
-				}
-				hideActionBar();
-				
 			} else {
 				mScreen.setVisibility(View.GONE);
 				showRecentItems();
@@ -108,7 +107,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 	private ImageButton mCornerTopRight;
 	private ImageButton mCornerBottomLeft;
 	private ImageButton mCornerBottomRight;
-	private RelativeLayout mAdsContainer;
 
 	protected Comic comic;
 	protected boolean destroyed = false;
@@ -186,12 +184,20 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		if(!isHoneyComb()) {
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-		}
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.main);
+        Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
 		dialogFactory = new ACVDialogFactory(this);
 		mRecentItems = (ViewGroup) findViewById(R.id.main_recent);
@@ -207,12 +213,12 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 				loadComic(path);
 			}
 		});
-		
+
 		mGestureDetector = new GestureDetector(this);
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		mButtonsContainer = findViewById(R.id.main_buttons_container);
-		
+
 		mMain = findViewById(R.id.main_layout);
 
 		ImageView logo = (ImageView) findViewById(R.id.main_logo);
@@ -232,8 +238,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 
 		preferencesController = new PreferencesController(this);
 
-		mAdsContainer = (RelativeLayout) findViewById(R.id.mainAdsContainer);
-
 		adjustBrightness();
 		adjustLowMemoryMode();
 
@@ -242,22 +246,21 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 			preferencesController.checkCleanExit();
 			markCleanExitPending = true;
 		}
-		
+
 		String comicPath = null;
 		if(savedInstanceState != null && savedInstanceState.containsKey(Constants.COMIC_PATH_KEY)) {
 			comicPath = savedInstanceState.getString(Constants.COMIC_PATH_KEY);
 		}
-		
+
 		if(comicPath == null) {
 			Intent intent = getIntent();
 			boolean loaded = false;
-			
+
 			if(intent != null) {
 				loaded = attemptToLoadComicFromViewIntent(intent);
 			}
 			if(!loaded) {
 				showRecentItems();
-				showAds();
 			}
 		} else {
 			loadComic(comicPath);
@@ -268,7 +271,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 	@Override
 	public void onResume() {
 		mRecentItemsListAdapter.refresh();
-		this.showAds();
 		super.onResume();
 	}
 
@@ -306,11 +308,19 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 		adjustCornerVisibility(mCornerBottomRight, Constants.INPUT_CORNER_BOTTOM_RIGHT, Constants.ACTION_VALUE_NEXT, allInvisible);
 	}
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 	
@@ -420,31 +430,37 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 		}
 	}
 
-	@Override
-	public boolean onMenuItemSelected (int featureId, MenuItem item){
+//	@Override
+//	public boolean onOptionsItemSelected (MenuItem item){
+//
+//		if(isHoneyComb()) {
+//			boolean comicLoaded = isComicLoaded();
+//
+//			if(item.hasSubMenu()) {
+//				Menu menu = item.getSubMenu();
+//
+//				switch(featureId) {
+//					case R.id.item_share:
+//						menu.findItem(R.id.item_share_screen).setVisible(comicLoaded);
+//						menu.findItem(R.id.item_set_as).setVisible(comicLoaded);
+//						break;
+//				}
+//			} else {
+//			}
+//		}
+//		return super.onMenuItemSelected(featureId, item);
+//	}
 
-		if(isHoneyComb()) {
-			boolean comicLoaded = isComicLoaded();
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
 
-			if(item.hasSubMenu()) {
-				Menu menu = item.getSubMenu();
-				
-				switch(featureId) {
-					case R.id.item_share:
-						menu.findItem(R.id.item_share_screen).setVisible(comicLoaded);
-						menu.findItem(R.id.item_set_as).setVisible(comicLoaded);
-						break;
-				}
-			} else {
-			}
-		}
-		return super.onMenuItemSelected(featureId, item);
-	}
+        return true;
+    }
 	
 	@Override
 	public void onPanelClosed (int featureId, Menu menu) {
 		super.onPanelClosed(featureId, menu);
-		hideActionBarDelayed();
 	}
 	
 	@Override
@@ -518,11 +534,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		
-		if(!isHoneyComb() && mScreen.isLoading()) {
-			return false;
-		}
-		
 		boolean comicLoaded = isComicLoaded();
 		menu.findItem(R.id.item_share_screen).setVisible(comicLoaded);
 		menu.findItem(R.id.item_set_as).setVisible(comicLoaded);
@@ -621,8 +632,7 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 		if (mPinch || mCornerButtonConsumed) return false; // TODO is pinch necessary?
 		final Point p = new Point(Math.round(e.getX()), Math.round(e.getY()));
 		boolean processed = action(Constants.SINGLE_TAP_KEY, Constants.ACTION_VALUE_NONE, p);
-		if(!processed)
-			toggleControls();
+
 		return processed;
 	}
 
@@ -829,7 +839,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 			mScreen.setVisibility(View.GONE);
 			showRecentItems();
 			preferencesController.savePreference(Constants.COMIC_PATH_KEY, null);
-			showAds();
 		} else {
 			finish();
 		}
@@ -940,7 +949,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 	private void loadComic(final String comicPath, final int initialIndex) {
 		final File file = new File(comicPath);
 		if (file.exists()) {
-			hideAds();
 
 			mComicPath = comicPath;
 			loadComicTask = new LoadComicTask();
@@ -1057,8 +1065,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 	 * Shows the menu.
 	 */
 	private void showMenu() {
-		if(isHoneyComb() && !isIcecream())
-			showActionBar();
 		openOptionsMenu();
 	}
 	
@@ -1080,11 +1086,7 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 	}
 	
 	private void startSettingsActivity() {
-		if(!isHoneyComb()) {
-			startActivityForResult(new Intent(this, SettingsActivityMobile.class), Constants.SETTINGS_CODE);
-		} else {
-			startActivityForResult(new Intent(this, SettingsActivityTablet.class), Constants.SETTINGS_CODE);
-		}
+		startActivityForResult(new Intent(this, SettingsActivityTablet.class), Constants.SETTINGS_CODE);
 	}
 	
 	private void startSubscribeActivity() {
@@ -1191,30 +1193,6 @@ public class ComicViewerActivity extends ExtendedActivity implements OnGestureLi
 			final String path = comic.getPath();
 			HistoryManager.getInstance(this).setBookmark(new File(path), index);
 		}
-	}
-	
-	private void showAds() {
-		hideAds();
-		View ad = AdsManager.getAd(this);
-		if(ad != null) {
-			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-			lp.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-			mAdsContainer.addView(ad, lp);
-		}
-	}
-	
-	private void hideAds() {
-		AdsManager.destroyAds(this);
-		mAdsContainer.removeAllViews();
-	}
-	
-	@Override
-	protected boolean toggleControls() {
-		boolean shown = super.toggleControls();
-		if(shown) {
-			showMenu();
-		}
-		return shown;
 	}
 		
 	private void showRecentItems() {
