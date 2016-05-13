@@ -1,5 +1,8 @@
 .DS_Store
 .idea/
+.gradle/
+app/build
+
 
 # built application files
 *.apk
@@ -18,6 +21,7 @@ lib/GoogleAdMobAdsSdk-4.3.1.jar
 # generated files
 bin/
 gen/
+build/
 
 # Local configuration file (sdk path, etc)
 local.properties
