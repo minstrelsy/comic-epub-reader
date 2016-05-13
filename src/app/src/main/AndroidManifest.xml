@@ -14,25 +14,25 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.androidcomics.acv"
-    android:versionCode="46"
-    android:versionName="1.4.1.4"
-    android:installLocation="auto">
+<manifest package="net.androidcomics.acv"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:installLocation="auto"
+          android:versionCode="46"
+          android:versionName="1.4.1.4">
 
     <supports-screenss
         anyDensity="false"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true" />
+        android:smallScreens="true"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="com.android.vending.BILLING" />
-    
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
+
     <application
         android:name="net.robotmedia.acv.ACVApplication"
         android:icon="@drawable/icon"
@@ -40,53 +40,61 @@
         android:theme="@style/Theme"
         >
         <activity
-            android:name="net.robotmedia.acv.ui.ComicViewerActivity"
+            android:name="net.robotmedia.acv.ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="nosensor"
             android:theme="@style/Theme.NoActionBar"
             >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name="net.robotmedia.acv.ui.ComicViewerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor"
+            android:theme="@style/Theme.NoActionBar"
+            >
+
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
+                <action android:name="android.intent.action.VIEW">
                 </action>
 
-                <category android:name="android.intent.category.DEFAULT" >
+                <category android:name="android.intent.category.DEFAULT">
                 </category>
 
                 <data
                     android:mimeType="application/x-cbr"
-                    android:scheme="file" >
+                    android:scheme="file">
                 </data>
                 <data
                     android:mimeType="application/x-cbz"
-                    android:scheme="file" >
+                    android:scheme="file">
                 </data>
                 <data
                     android:mimeType="application/x-acv"
-                    android:scheme="file" >
+                    android:scheme="file">
                 </data>
                 <data
                     android:mimeType="application/zip"
-                    android:scheme="file" >
+                    android:scheme="file">
                 </data>
-                <data 
-                     android:scheme="file"
-                     android:pathPattern=".*\\.cbr" >
+                <data
+                    android:pathPattern=".*\\.cbr"
+                    android:scheme="file">
                 </data>
-                <data 
-                     android:scheme="file"
-                     android:pathPattern=".*\\.cbz" >
+                <data
+                    android:pathPattern=".*\\.cbz"
+                    android:scheme="file">
                 </data>
-                <data 
-                     android:scheme="file"
-                     android:pathPattern=".*\\.acv" >
+                <data
+                    android:pathPattern=".*\\.acv"
+                    android:scheme="file">
                 </data>
-                 <data 
-                     android:scheme="file"
-                     android:pathPattern=".*\\.zip" >
+                <data
+                    android:pathPattern=".*\\.zip"
+                    android:scheme="file">
                 </data>
             </intent-filter>
         </activity>
@@ -98,39 +106,41 @@
         <activity
             android:name="net.robotmedia.acv.ui.SDBrowserActivity"
             android:label="@string/activity_sd_browser_label"
-            android:screenOrientation="behind" >
+            android:screenOrientation="behind">
         </activity>
         <activity
             android:name="net.robotmedia.acv.ui.settings.mobile.SettingsActivityMobile"
-            android:label="@string/activity_settings_label" >
+            android:label="@string/activity_settings_label">
         </activity>
         <activity
             android:name="net.robotmedia.acv.ui.settings.tablet.SettingsActivityTablet"
-            android:label="@string/activity_settings_label" >
+            android:label="@string/activity_settings_label">
         </activity>
         <activity
             android:name="net.robotmedia.acv.ui.settings.mobile.VisualSettingsActivity"
-            android:label="@string/category_visual_title" >
+            android:label="@string/category_visual_title">
         </activity>
         <activity
             android:name="net.robotmedia.acv.ui.settings.mobile.ControlSettingsActivity"
-            android:label="@string/category_controls_title" >
+            android:label="@string/category_controls_title">
         </activity>
-        <activity android:name="net.robotmedia.acv.ui.settings.mobile.StorageSettingsActivity"
-            android:label="@string/category_memory_title" >
+        <activity
+            android:name="net.robotmedia.acv.ui.settings.mobile.StorageSettingsActivity"
+            android:label="@string/category_memory_title">
         </activity>
         <activity
             android:name="net.robotmedia.acv.ui.settings.mobile.AboutSettingsActivity"
-            android:label="@string/category_about_title" >
+            android:label="@string/category_about_title">
         </activity>
-        <activity android:name="net.robotmedia.acv.ui.settings.mobile.AdvancedSettingsActivity"
-            android:label="@string/category_about_title" >
+        <activity
+            android:name="net.robotmedia.acv.ui.settings.mobile.AdvancedSettingsActivity"
+            android:label="@string/category_about_title">
         </activity>
         <activity
             android:name="net.robotmedia.acv.ui.SubscribeActivity"
             android:label="@string/activity_subscribe_label"
             android:screenOrientation="behind"
-            android:theme="@android:style/Theme.Dialog" />
-</application>
+            android:theme="@android:style/Theme.Dialog"/>
+    </application>
 
 </manifest>
