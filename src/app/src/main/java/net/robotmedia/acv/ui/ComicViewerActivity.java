@@ -40,7 +40,12 @@ import android.net.Uri;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -53,11 +58,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.support.v7.app.AppCompatActivity;
 
 public class ComicViewerActivity extends AppCompatActivity implements OnGestureListener, GestureDetector.OnDoubleTapListener, ComicViewListener,
-        NavigationView.OnNavigationItemSelectedListener  {
+        NavigationView.OnNavigationItemSelectedListener, RecentReadsFragment.OnFragmentInteractionListener, ShelfFragment.OnFragmentInteractionListener, RecentlAddedFragment.OnFragmentInteractionListener {
 
 	public final static String POSITION_EXTRA = "position";
-	
-	private class LoadComicTask extends AsyncTask<String, Object, Comic> {
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    private class LoadComicTask extends AsyncTask<String, Object, Comic> {
 
 		public int initialIndex = 0;
 		
@@ -190,6 +200,14 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
         Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -267,6 +285,43 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		}
 		
 	}
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new RecentReadsFragment(), "RECENT READS");
+        adapter.addFragment(new ShelfFragment(), "COMICS");
+        adapter.addFragment(new RecentlAddedFragment(), "RECENTLY ADDED");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 	
 	@Override
 	public void onResume() {

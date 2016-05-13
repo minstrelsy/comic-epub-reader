@@ -24,7 +24,7 @@
     <!-- Main -->
     <string name="main_recent_items">OPEN RECENT</string>
     <string name="main_recent_items_empty">Nothing read yet.\nTap the logo or press menu to start.</string>
-	<string name="main_intro">Press <b>Menu</b> or fling up to start</string>
+    <string name="main_intro">Press <b>Menu</b> or fling up to start</string>
     <string name="item_navigate_title">Go to</string>
     <string name="item_navigate_shortcut">G</string>
     <string name="item_first_title">First</string>
@@ -48,7 +48,7 @@
     <string name="item_open_title">Open</string>
     <string name="item_settings_title">Settings</string>
     <string name="menu_close_title">Close</string>
-    
+
     <string name="dialog_no_sd_title">Warning</string>
     <string name="dialog_no_sd_text">No SD card was found.\n\nPlease insert or mount your SD card to open comics.</string>
     <string name="dialog_page_progress_title">Loading&#8230;</string>
@@ -58,24 +58,24 @@
     <string name="dialog_load_error_title">Oops!</string>
     <string name="dialog_load_error_text">An error has occurred while loading. If you need help, please contact support@androidcomics.net.</string>
     <string name="dialog_page_error_title">Oops!</string>
-	<string name="dialog_page_error_text">Unable to load image. This generally happens because of an out of memory error.\n\nFor CBR/RAR files, try extracting into a folder and open the folder with a long tap.\n\nFor the rest, closing ACV and trying again after a while might help.</string>
+    <string name="dialog_page_error_text">Unable to load image. This generally happens because of an out of memory error.\n\nFor CBR/RAR files, try extracting into a folder and open the folder with a long tap.\n\nFor the rest, closing ACV and trying again after a while might help.</string>
     <string name="dialog_flip_controls_title">Flip controls?</string>
     <string name="dialog_flip_controls_text">Flip navigation controls to adapt them to current reading direction?</string>
     <string name="dialog_unavailable_title">App unavailable</string>
     <string name="dialog_unavailable_text">The requested app is either not yet available or unreacheable.\n\nWould you like to subscribe to our newsletter and be notified of future releases?</string>
-    
+
     <string name="sd_browser_back">Back to parent folder</string>
     <string name="sd_browser_empty">Empty folder</string>
     <string name="sd_browser_open">OPEN</string>
     <string name="sd_browser_recent">RECENT</string>
-    
+
     <string name="screen_browser_go">Go</string>
-    
+
     <!-- Preferences -->
-    
-	<string name="category_controls_title">Controls</string>
+
+    <string name="category_controls_title">Controls</string>
     <string name="preference_map_actions_title">Custom controls</string>
-    <string name="preference_map_actions_summary">Set the action of each control event</string>   
+    <string name="preference_map_actions_summary">Set the action of each control event</string>
     <string name="preference_single_tap_title">Single tap</string>
     <string name="preference_double_tap_title">Double tap</string>
     <string name="preference_long_tap_title">Long press</string>
@@ -96,47 +96,47 @@
     <string name="preference_volume_up_title">Volume up</string>
     <string name="preference_volume_down_title">Volume down</string>
     <string name="preference_control_defaults_title">Restore defaults</string>
-    <string name="preference_control_defaults_summary">Reset action settings to default values</string>   
+    <string name="preference_control_defaults_summary">Reset action settings to default values</string>
     <string name="preference_direction_title">Reading direction</string>
-    <string name="preference_direction_summary">Choose between left-to-right or right-to-left</string>   
+    <string name="preference_direction_summary">Choose between left-to-right or right-to-left</string>
     <string name="preference_auto_rotate_title">Auto-rotate</string>
-    <string name="preference_auto_rotate_summary">Rotate image when phone orientation changes</string>   
+    <string name="preference_auto_rotate_summary">Rotate image when phone orientation changes</string>
     <string name="category_visual_title">Visual</string>
     <string name="preference_transition_mode_title">Transition mode</string>
     <string name="preference_transition_mode_summary">Choose the animation for screen transitions</string>
     <string name="preference_scale_mode_title">Scale mode</string>
-    <string name="preference_scale_mode_summary">Choose how images will be scaled on the screen</string>   
+    <string name="preference_scale_mode_summary">Choose how images will be scaled on the screen</string>
     <string name="preference_show_number_title">Show screen number</string>
-    <string name="preference_show_number_summary">Briefly shows the screen number in a corner</string>   
+    <string name="preference_show_number_summary">Briefly shows the screen number in a corner</string>
     <string name="preference_invisible_corners_title">Invisible corners</string>
     <string name="preference_invisible_corners_summary">Make corner buttons invisible</string>
     <string name="preference_brigthness_title">Brightness</string>
     <string name="preference_brigthness_summary">Adjust screen brightness</string>
     <string name="preference_default_brightness">Default brightness</string>
- 
+
     <string name="category_memory_title">History</string>
     <string name="preference_clear_history_title">Clear history</string>
     <string name="preference_clear_history_summary">Clear all viewing history</string>
- 
+
     <string name="preference_low_memory_title">Low memory mode</string>
-    <string name="preference_low_memory_summary">Disable preloading and transitions</string>  
-        
+    <string name="preference_low_memory_summary">Disable preloading and transitions</string>
+
     <string name="category_about_title">About</string>
     <string name="preference_acv_listing_title">Google Play listing</string>
-    <string name="preference_acv_listing_summary">Open ACV listing on Google Play</string>  
+    <string name="preference_acv_listing_summary">Open ACV listing on Google Play</string>
     <string name="preference_version_title">Version</string>
-    <string name="preference_version_summary">ACV v</string>  
+    <string name="preference_version_summary">ACV v</string>
     <string name="preference_contact_title">Contact</string>
-    <string name="preference_contact_summary">Email Robot Media</string>                       
+    <string name="preference_contact_summary">Email Robot Media</string>
     <string name="preference_subscribe_summary">Receive news about ACV</string>
-    
+
     <!-- Premium -->
     <string name="category_premium_title">Premium</string>
     <string name="preference_premium_title">Remove Ads</string>
     <string name="preference_premium_summary">Buy ACV Premium to Remove Ads</string>
     <string name="alert_premium_purchased_title">Premium Purchased</string>
     <string name="alert_premium_purchased_message">Thank you for supporting ACV!</string>
-    
+
     <!-- Advanced Preferences -->
     <string name="category_advanced_title">Advanced</string>
     <string name="preference_max_image_width_title">Max image width</string>
@@ -146,25 +146,25 @@
     <string name="preference_max_image_height_dialog_title">Max image height</string>
     <string name="preference_max_image_height_dialog_message">Set the maximum image height. Taller images will be downscaled.</string>
 
-	<!-- Subscribe -->
+    <!-- Subscribe -->
     <string name="txt_subscribe_intro">Subscribe to our email newsletter to be notified of future releases.</string>
     <string name="btn_subscribe_submit">Submit</string>
-   	<string name="dialog_subscribe_success_title">Subscription in process</string>
+    <string name="dialog_subscribe_success_title">Subscription in process</string>
     <string name="dialog_subscribe_success_text">You will receive an activation email shortly.</string>
     <string name="dialog_subscribe_error_title">Ooops!</string>
     <string name="dialog_subscribe_error_text">The newsletter service is either unreachable or unavailable. Please try again later.</string>
-	<string name="dialog_email_error_title">Invalid email</string>
+    <string name="dialog_email_error_title">Invalid email</string>
     <string name="dialog_email_error_text">Please enter a valid email address.</string>
 
-	<!-- Share -->
+    <!-- Share -->
     <string name="share_app_title">Read comics in your Android!</string>
     <string name="share_app_message">Check out ACV, the #1 comics and manga reader for Android http://goo.gl/FfAWL</string>
     <string name="share_screen_title">Screen from @comic</string>
     <string name="share_screen_message">Check out this screen from @comic sent from ACV http://goo.gl/FfAWL</string>
 
-	<!-- Changelog -->
-	<string name="dialog_changelog_title">Changelog</string>
-	<string name="changelog_english_only">For practical purposes the changelog is only available in English. Sorry for any inconvenience.</string>
+    <!-- Changelog -->
+    <string name="dialog_changelog_title">Changelog</string>
+    <string name="changelog_english_only">For practical purposes the changelog is only available in English. Sorry for any inconvenience.</string>
 
 
     <string name="my_books">My Books</string>
@@ -183,4 +183,7 @@
     <string name="read">Read</string>
     <string name="get_books">Get Books</string>
     <string name="files">Files</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
