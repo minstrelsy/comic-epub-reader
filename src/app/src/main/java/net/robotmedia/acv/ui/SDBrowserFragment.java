@@ -36,6 +36,7 @@ public class SDBrowserFragment extends Fragment {
 	private LayoutInflater mInflater;
 	private PreferencesController preferencesController;
     private String comicsPath;
+    private File currentDirectory;
 
 	/**
 	 * Use this factory method to create a new instance of
@@ -70,7 +71,7 @@ public class SDBrowserFragment extends Fragment {
         String storageState = Environment.getExternalStorageState();
 
         if (Environment.MEDIA_MOUNTED.equals(storageState)) {
-            File directory = new File(comicsPath);
+            currentDirectory = new File(comicsPath);
 
             browserListView = (ListView) view.findViewById(R.id.list);
             browserListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -109,7 +110,13 @@ public class SDBrowserFragment extends Fragment {
                 }
             });
 
-            changeDirectory(directory);
+            (view.findViewById(R.id.browser_back)).setOnClickListener( new TextView.OnClickListener() {
+                public void onClick(View view){
+                    browserBack(currentDirectory);
+                }
+            });
+
+            changeDirectory(currentDirectory);
         } else {
             //ToDo: Dialog warning no SD.
         }
@@ -123,11 +130,11 @@ public class SDBrowserFragment extends Fragment {
 		browserListView.setAdapter(new ListAdapter(directory));
 	}
 
-	public void fragmentOnKeyDown(int keyCode, KeyEvent event) {
-		int code = event.getKeyCode();
-
-        if (code == KeyEvent.KEYCODE_BACK) {
-            //ToDo:
+	public void fragmentOnKeyDown(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if(!browserBack(currentDirectory)){
+                setResultAndFinish(null);
+            }
         }
     }
 
@@ -138,29 +145,30 @@ public class SDBrowserFragment extends Fragment {
 //        parent.finish();
 	}
 
+    private boolean browserBack(File file){
+        if(file != null && file.getParent() != null){
+            changeDirectory(file.getParentFile());
+        }
+
+        return false;
+    }
+
 	public class ListAdapter extends BaseAdapter {
 		ArrayList<File> contents = new ArrayList<>();
-		private File current;
 		private boolean isEmpty;
 
 		public ListAdapter(File current) {
-            this.current = current;
+            currentDirectory = current;
 			filterContents();
 		}
 
 		private void filterContents() {
-			String[] allContents = current.list();
-            File parent = current.getParentFile();
-            int size = 0;
+			String[] allContents = currentDirectory.list();
 			contents = new ArrayList<>();
             isEmpty = true;
 
-			if (parent != null)
-                contents.add(parent);
-
 			if (allContents != null) {
-				String path = current.getPath();
-                size = contents.size();
+				String path = currentDirectory.getPath();
 
 				for (int i = 0; i < allContents.length; i++) {
 					String contentName = allContents[i];
@@ -175,7 +183,7 @@ public class SDBrowserFragment extends Fragment {
 				}
 			}
 
-            isEmpty = (contents.size() == size);
+            isEmpty = (contents.size() == 0);
 		}
 
 		public int getCount() {
@@ -197,50 +205,42 @@ public class SDBrowserFragment extends Fragment {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (position == 0 && current.getParent() != null) {
-				TextView textView = (TextView) mInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-				textView.setText(R.string.sd_browser_back);
-				textView.setTag("back");
-
-				return textView;
-			} else {
-				if (isEmpty) {
-                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                    return inflater.inflate(R.layout.sd_item_empty, null);
-				}
-
-				ViewHolder holder;
-                File file = contents.get(position);
-                String name = file.getName();
-                String extension = FileUtils.getFileExtension(name);
-
-				if (convertView == null || !(convertView.getTag() instanceof ViewHolder)) {
-					convertView = mInflater.inflate(R.layout.sd_item, parent, false);
-					holder = new ViewHolder();
-
-					holder.icon = (ImageView) convertView.findViewById(R.id.sd_item_icon);
-					holder.name = (TextView) convertView.findViewById(R.id.sd_item_name);
-					holder.size = (TextView) convertView.findViewById(R.id.sd_item_size);
-
-					convertView.setTag(holder);
-				}else{
-					holder = (ViewHolder) convertView.getTag();
-				}
-
-				if (supportedExtensions.containsKey(extension))
-					holder.icon.setImageResource(supportedExtensions.get(extension));
-
-				holder.name.setText(name);
-                holder.size.setVisibility(View.GONE);
-
-                if (!file.isDirectory()) {
-					holder.size.setVisibility(View.VISIBLE);
-					long size = file.length() / 1024;
-					holder.size.setText(String.valueOf(size) + " KB");
-				}
-
-				return convertView;
+			if (isEmpty) {
+				LayoutInflater inflater = getActivity().getLayoutInflater();
+				return inflater.inflate(R.layout.sd_item_empty, null);
 			}
+
+			ViewHolder holder;
+			File file = contents.get(position);
+			String name = file.getName();
+			String extension = FileUtils.getFileExtension(name);
+
+			if (convertView == null || !(convertView.getTag() instanceof ViewHolder)) {
+				convertView = mInflater.inflate(R.layout.sd_item, parent, false);
+				holder = new ViewHolder();
+
+				holder.icon = (ImageView) convertView.findViewById(R.id.sd_item_icon);
+				holder.name = (TextView) convertView.findViewById(R.id.sd_item_name);
+				holder.size = (TextView) convertView.findViewById(R.id.sd_item_size);
+
+				convertView.setTag(holder);
+			}else{
+				holder = (ViewHolder) convertView.getTag();
+			}
+
+			if (supportedExtensions.containsKey(extension))
+				holder.icon.setImageResource(supportedExtensions.get(extension));
+
+			holder.name.setText(name);
+			holder.size.setVisibility(View.GONE);
+
+			if (!file.isDirectory()) {
+				holder.size.setVisibility(View.VISIBLE);
+				long size = file.length() / 1024;
+				holder.size.setText(String.valueOf(size) + " KB");
+			}
+
+			return convertView;
 		}
 
 	}

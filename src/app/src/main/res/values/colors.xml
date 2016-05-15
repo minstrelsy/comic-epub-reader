@@ -9,4 +9,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="textColorPrimary">#333</color>
     <color name="textColorSecondary">#666</color>
+    <color name="selected_textview">#22000000</color>
 </resources>

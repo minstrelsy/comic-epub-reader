@@ -64,7 +64,7 @@
     <string name="dialog_unavailable_title">App unavailable</string>
     <string name="dialog_unavailable_text">The requested app is either not yet available or unreacheable.\n\nWould you like to subscribe to our newsletter and be notified of future releases?</string>
 
-    <string name="sd_browser_back">Back to parent folder</string>
+    <string name="sd_browser_back"> &lt; Back to parent folder</string>
     <string name="sd_browser_empty">Empty folder</string>
     <string name="sd_browser_open">OPEN</string>
     <string name="sd_browser_recent">RECENT</string>
