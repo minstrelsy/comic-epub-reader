@@ -28,6 +28,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return mFragmentList.size();
     }
 
+    @Override
+    public float getPageWidth(int position) {
+        if(position == 1)
+            return 1.0f;
+
+        return(0.5f);
+    }
+
     public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
