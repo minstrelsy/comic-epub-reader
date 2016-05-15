@@ -22,7 +22,6 @@ import java.util.*;
 
 import net.androidcomics.acv.R;
 import net.robotmedia.acv.Constants;
-import net.robotmedia.acv.adapter.RecentListBaseAdapter;
 import net.robotmedia.acv.comic.Comic;
 import net.robotmedia.acv.logic.*;
 import net.robotmedia.acv.provider.HistoryManager;
@@ -39,33 +38,18 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.*;
 import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import android.widget.AdapterView.OnItemClickListener;
 import android.support.v7.app.AppCompatActivity;
 
-public class ComicViewerActivity extends AppCompatActivity implements OnGestureListener, GestureDetector.OnDoubleTapListener, ComicViewListener,
-        NavigationView.OnNavigationItemSelectedListener, RecentReadsFragment.OnFragmentInteractionListener, ShelfFragment.OnFragmentInteractionListener, RecentlyAddedFragment.OnFragmentInteractionListener {
+public class ComicViewerActivity extends AppCompatActivity implements OnGestureListener, GestureDetector.OnDoubleTapListener, ComicViewListener {
 
 	public final static String POSITION_EXTRA = "position";
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 
     private class LoadComicTask extends AsyncTask<String, Object, Comic> {
 
@@ -92,14 +76,12 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 				trackOpen();
 				
 				mScreen.setVisibility(View.VISIBLE);
-				hideRecentItems();
 				preferencesController.savePreference(Constants.COMIC_PATH_KEY, comic.getPath());
 
 				mScreen.setComic(comic);
 				mScreen.goToScreen(initialIndex);
 			} else {
 				mScreen.setVisibility(View.GONE);
-				showRecentItems();
 				showDialog(Constants.DIALOG_LOAD_ERROR);
 			}
 		}
@@ -124,21 +106,12 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 	protected LoadComicTask loadComicTask = null;
 
 	protected boolean markCleanExitPending = false;
-	protected ViewGroup mRecentItems = null;
-	protected ListView mRecentItemsList = null;
-	protected RecentListBaseAdapter mRecentItemsListAdapter = null;
 	protected View mButtonsContainer;
 	protected View mMain;
 	protected ComicView mScreen;
 	protected PreferencesController preferencesController;
 	protected SharedPreferences preferences;
 	protected boolean requestedRotation = false;
-
-	private String mComicPath; // Used for testing
-	
-	public String getComicPath() {
-		return mComicPath;
-	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -196,42 +169,9 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		setContentView(R.layout.main);
-        Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+		setContentView(R.layout.comic_viewer);
 
 		dialogFactory = new ACVDialogFactory(this);
-		mRecentItems = (ViewGroup) findViewById(R.id.main_recent);
-		mRecentItemsList = (ListView) findViewById(R.id.main_recent_list);
-		mRecentItemsList.setEmptyView(findViewById(R.id.main_recent_list_no_items));
-		mRecentItemsListAdapter = new RecentListBaseAdapter(this, R.layout.list_item_recent);
-		mRecentItemsListAdapter.setMaxNumItems(2);
-		mRecentItemsList.setAdapter(mRecentItemsListAdapter);
-		mRecentItemsList.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String path = (String) parent.getItemAtPosition(position);
-				loadComic(path);
-			}
-		});
-
 		mGestureDetector = new GestureDetector(this);
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -277,56 +217,10 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 			if(intent != null) {
 				loaded = attemptToLoadComicFromViewIntent(intent);
 			}
-			if(!loaded) {
-				showRecentItems();
-			}
 		} else {
 			loadComic(comicPath);
 		}
-		
-	}
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new RecentReadsFragment(), "RECENT READS");
-        adapter.addFragment(new ShelfFragment(), "COMICS");
-        adapter.addFragment(new RecentlyAddedFragment(), "RECENTLY ADDED");
-        viewPager.setAdapter(adapter);
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-	
-	@Override
-	public void onResume() {
-		mRecentItemsListAdapter.refresh();
-		super.onResume();
 	}
 
 	private void adjustLowMemoryMode() {
@@ -485,34 +379,6 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		}
 	}
 
-//	@Override
-//	public boolean onOptionsItemSelected (MenuItem item){
-//
-//		if(isHoneyComb()) {
-//			boolean comicLoaded = isComicLoaded();
-//
-//			if(item.hasSubMenu()) {
-//				Menu menu = item.getSubMenu();
-//
-//				switch(featureId) {
-//					case R.id.item_share:
-//						menu.findItem(R.id.item_share_screen).setVisible(comicLoaded);
-//						menu.findItem(R.id.item_set_as).setVisible(comicLoaded);
-//						break;
-//				}
-//			} else {
-//			}
-//		}
-//		return super.onMenuItemSelected(featureId, item);
-//	}
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-
-        return true;
-    }
-	
 	@Override
 	public void onPanelClosed (int featureId, Menu menu) {
 		super.onPanelClosed(featureId, menu);
@@ -606,7 +472,6 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 	
 	public void onScreenLoadFailed() {
 		mScreen.setVisibility(View.INVISIBLE);
-		showRecentItems();
 
 		// Remove the comic path in case the comic is defective. 
 		// If the page load failed because of an orientation change, the comic path is saved in the instance state anyway.
@@ -886,7 +751,6 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		if (isComicLoaded()) {
 			removePreviousComic(true);
 			mScreen.setVisibility(View.GONE);
-			showRecentItems();
 			preferencesController.savePreference(Constants.COMIC_PATH_KEY, null);
 		} else {
 			finish();
@@ -999,7 +863,6 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		final File file = new File(comicPath);
 		if (file.exists()) {
 
-			mComicPath = comicPath;
 			loadComicTask = new LoadComicTask();
 			loadComicTask.initialIndex = initialIndex;
 			loadComicTask.execute(comicPath);
@@ -1243,16 +1106,4 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 			HistoryManager.getInstance(this).setBookmark(new File(path), index);
 		}
 	}
-		
-	private void showRecentItems() {
-		mRecentItemsListAdapter.refresh();
-		mRecentItems.setVisibility(View.VISIBLE);
-		mButtonsContainer.setVisibility(View.INVISIBLE);
-	}
-	
-	private void hideRecentItems() {
-		mRecentItems.setVisibility(View.GONE);
-		mButtonsContainer.setVisibility(View.VISIBLE);
-	}
-	
 }
