@@ -115,7 +115,9 @@ public class SDBrowserFragment extends Fragment {
         File[] validFiles = directory.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String filename) {
                 String ext = FileUtils.getFileExtension(filename);
-                return filename.indexOf(".") != 0 && (supportedExtensions.containsKey(ext.toLowerCase()) || dir.isDirectory());
+                File file = new File(dir.getPath(), filename);
+
+                return filename.indexOf(".") != 0 && (supportedExtensions.containsKey(ext.toLowerCase()) || file.isDirectory());
             }
         });
 
