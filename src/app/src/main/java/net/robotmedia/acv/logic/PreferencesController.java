@@ -39,40 +39,7 @@ public class PreferencesController {
 	public PreferencesController(Context context) {
 		this.preferences = PreferenceManager.getDefaultSharedPreferences(context);		
 	}
-	
-	@SuppressWarnings("deprecation")
-	public void legacy() {
-		File legacyTempPath = new File(Environment.getExternalStorageDirectory(), Constants.LEGACY_TEMP_PATH);
-		if(legacyTempPath.exists()) {
-			String[] files = legacyTempPath.list();
-			if (files != null) {
-				for (int i = 0; i < files.length; i++) {
-					File file = new File(legacyTempPath, files[i]);
-					file.delete();
-				}
-			}
-			legacyTempPath.delete();
-		}
-		
-		Editor editor = preferences.edit();
-		if (preferences.contains(Constants.LEGACY_FLING_ENABLED_KEY)) {
-			if (!preferences.getBoolean(Constants.LEGACY_FLING_ENABLED_KEY, true)) {
-				editor.putString(Constants.INPUT_FLING_LEFT, Constants.ACTION_VALUE_NONE);
-				editor.putString(Constants.INPUT_FLING_RIGHT, Constants.ACTION_VALUE_NONE);
-			}
-			editor.remove(Constants.LEGACY_FLING_ENABLED_KEY);
-		}
-		editor.remove(Constants.LEGACY_STARTUP_UPDATE_CHECK_KEY);
-		
-		// Bug fix
-		int orientation = preferences.getInt(Constants.ORIENTATION_KEY, Configuration.ORIENTATION_LANDSCAPE);
-		if (orientation == 0) {
-			editor.putInt(Constants.ORIENTATION_KEY, Configuration.ORIENTATION_LANDSCAPE);
-		}
 
-		editor.commit();
-	}
-	
 	public boolean isLeftToRight() {
 		String direction = preferences.getString(Constants.DIRECTION_KEY, Constants.DIRECTION_LEFT_TO_RIGHT_VALUE);
 		return Constants.DIRECTION_LEFT_TO_RIGHT_VALUE.equals(direction);

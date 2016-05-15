@@ -24,7 +24,6 @@ public class ACVApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		final PreferencesController preferences = new PreferencesController(this);
-		preferences.legacy();
 		preferences.setMaxImageResolution();
 	}
 
