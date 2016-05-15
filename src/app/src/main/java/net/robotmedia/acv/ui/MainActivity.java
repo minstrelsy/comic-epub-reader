@@ -18,9 +18,10 @@ package net.robotmedia.acv.ui;
 import net.androidcomics.acv.R;
 import net.robotmedia.acv.Constants;
 import net.robotmedia.acv.adapter.ViewPagerAdapter;
-import net.robotmedia.acv.ui.settings.mobile.SettingsActivityMobile;
 import net.robotmedia.acv.ui.settings.tablet.SettingsActivityTablet;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.*;
 import android.net.Uri;
 import android.os.*;
@@ -34,6 +35,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         RecentReadsFragment.OnFragmentInteractionListener,
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecentlAddedFragment.OnFragmentInteractionListener {
 
     protected SharedPreferences preferences;
+    private ViewPager viewPager;
+    private FrameLayout frameLayout;
+    private TabLayout tabLayout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -69,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        frameLayout = (FrameLayout) findViewById(R.id.container);
+        frameLayout.setVisibility(FrameLayout.GONE);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
@@ -104,7 +113,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        Fragment fragment = null;
+        Bundle bundle = new Bundle();
+
+        switch(item.getItemId()){
+            case R.id.nav_my_books:
+                frameLayout.setVisibility(FrameLayout.GONE);
+                viewPager.setVisibility(ViewPager.VISIBLE);
+                tabLayout.setVisibility(TabLayout.VISIBLE);
+                break;
+            case R.id.nav_my_comics:
+                frameLayout.setVisibility(FrameLayout.GONE);
+                viewPager.setVisibility(ViewPager.VISIBLE);
+                tabLayout.setVisibility(TabLayout.VISIBLE);
+                break;
+            case R.id.nav_favorites:
+                frameLayout.setVisibility(FrameLayout.GONE);
+                viewPager.setVisibility(ViewPager.VISIBLE);
+                tabLayout.setVisibility(TabLayout.VISIBLE);
+                break;
+            case R.id.nav_collections:
+                frameLayout.setVisibility(FrameLayout.GONE);
+                viewPager.setVisibility(ViewPager.VISIBLE);
+                tabLayout.setVisibility(TabLayout.VISIBLE);
+
+                break;
+            case R.id.nav_add_file:
+                viewPager.setVisibility(ViewPager.GONE);
+                tabLayout.setVisibility(TabLayout.GONE);
+                frameLayout.setVisibility(FrameLayout.VISIBLE);
+
+                fragment = new SDBrowserFragment();
+                String comicsPath = preferences.getString(Constants.COMICS_PATH_KEY, Environment.getExternalStorageDirectory().getAbsolutePath());
+                bundle.putString(comicsPath, Constants.COMIC_PATH_KEY);
+                fragment.setArguments(bundle);
+                break;
+            case R.id.nav_settings:
+                viewPager.setVisibility(ViewPager.GONE);
+                tabLayout.setVisibility(TabLayout.GONE);
+                frameLayout.setVisibility(FrameLayout.VISIBLE);
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment).commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
@@ -114,9 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.item_settings:
                 startSettingsActivity();
-                return true;
-            case R.id.item_open:
-                startSDBrowserActivity();
                 return true;
             case R.id.item_share_app:
                 shareApp();
@@ -132,13 +187,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void startSettingsActivity() {
         Intent myIntent = new Intent(this, SettingsActivityTablet.class);
         startActivityForResult(myIntent, Constants.SETTINGS_CODE);
-    }
-
-    private void startSDBrowserActivity() {
-        Intent myIntent = new Intent(this, SDBrowserActivity.class);
-        String comicsPath = preferences.getString(Constants.COMICS_PATH_KEY, Environment.getExternalStorageDirectory().getAbsolutePath());
-        myIntent.putExtra(Constants.COMICS_PATH_KEY, comicsPath);
-        startActivityForResult(myIntent, Constants.SD_BROWSER_CODE);
     }
 
 

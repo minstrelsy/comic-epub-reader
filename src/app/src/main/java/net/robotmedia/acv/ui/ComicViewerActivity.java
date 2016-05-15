@@ -1134,7 +1134,7 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 	}
 
 	private void startSDBrowserActivity() {
-		Intent myIntent = new Intent(this, SDBrowserActivity.class);
+		Intent myIntent = new Intent(this, SDBrowserFragment.class);
 		String comicsPath = preferences.getString(Constants.COMICS_PATH_KEY, Environment.getExternalStorageDirectory().getAbsolutePath());
 		myIntent.putExtra(Constants.COMICS_PATH_KEY, comicsPath);
 		startActivityForResult(myIntent, Constants.SD_BROWSER_CODE);
