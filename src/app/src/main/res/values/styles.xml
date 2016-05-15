@@ -63,4 +63,9 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:background">@drawable/bg_row</item>
 	</style>
+
+	<style name="Theme.SDItem">
+		<item name="android:textSize">@dimen/list_item</item>
+		<item name="android:textColor">@color/textColorSecondary</item>
+	</style>
 </resources>

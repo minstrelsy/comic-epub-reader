@@ -118,7 +118,7 @@ public class SDBrowserFragment extends Fragment {
     }
 
 	private void changeDirectory(File directory) {
-        getActivity().setTitle(directory.getName());
+        getActivity().setTitle(Objects.equals(directory.getName(), "0") ? getResources().getString(R.string.file) : directory.getName());
 		preferencesController.savePreference(Constants.COMICS_PATH_KEY, directory.getAbsolutePath());
 		browserListView.setAdapter(new ListAdapter(directory));
 	}
@@ -175,7 +175,7 @@ public class SDBrowserFragment extends Fragment {
 				}
 			}
 
-            isEmpty = (contents.size() > size);
+            isEmpty = (contents.size() == size);
 		}
 
 		public int getCount() {
@@ -209,11 +209,10 @@ public class SDBrowserFragment extends Fragment {
                     return inflater.inflate(R.layout.sd_item_empty, null);
 				}
 
-				ViewHolder holder = (ViewHolder) convertView.getTag();
+				ViewHolder holder;
                 File file = contents.get(position);
                 String name = file.getName();
                 String extension = FileUtils.getFileExtension(name);
-                int iconId = R.drawable.folder;
 
 				if (convertView == null || !(convertView.getTag() instanceof ViewHolder)) {
 					convertView = mInflater.inflate(R.layout.sd_item, parent, false);
@@ -224,12 +223,13 @@ public class SDBrowserFragment extends Fragment {
 					holder.size = (TextView) convertView.findViewById(R.id.sd_item_size);
 
 					convertView.setTag(holder);
+				}else{
+					holder = (ViewHolder) convertView.getTag();
 				}
 
 				if (supportedExtensions.containsKey(extension))
-					iconId = supportedExtensions.get(extension);
+					holder.icon.setImageResource(supportedExtensions.get(extension));
 
-				holder.icon.setImageResource(iconId);
 				holder.name.setText(name);
                 holder.size.setVisibility(View.GONE);
 

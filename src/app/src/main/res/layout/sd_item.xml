@@ -14,40 +14,60 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="8dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal"
+              android:padding="8dp"
     >
-    
-    <ImageView android:id="@+id/sd_item_icon"
-    	android:layout_width="32px"
-    	android:layout_height="32px"
-    	android:layout_alignParentLeft="true"
-    	style="@style/Theme.image2"
-    android:layout_gravity="center"/>
 
-	<RelativeLayout android:id="@+id/sd_item_detail"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/sd_item_icon"
-        android:paddingLeft="8px"
-		android:orientation="vertical"
-		android:layout_gravity="center_vertical">
-		
-		<TextView android:id="@+id/sd_item_name"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-	        android:singleLine="true"
-			style="@style/Theme.text2b"/>
-		
-		<TextView android:id="@+id/sd_item_size"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/sd_item_name"
-			style="@style/Theme.text3"
-		/>
-	</RelativeLayout>
+    <ImageView
+        android:id="@+id/sd_item_icon"
+        style="@style/Theme.image2"
+        android:src="@drawable/ic_menu_archive"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/sd_item_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toEndOf="@id/sd_item_icon"
+        android:orientation="vertical"
+        android:focusable="false"
+        android:paddingLeft="8dp">
+
+        <TextView
+            android:id="@+id/sd_item_name"
+            style="@style/Theme.SDItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/sd_item_size"
+            style="@style/Theme.text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sd_item_name"
+            />
+    </RelativeLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_gravity="center_vertical|end"
+        android:layout_alignParentEnd="true"
+        android:enabled="true"
+        android:focusable="false"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        />
+
+</RelativeLayout>
