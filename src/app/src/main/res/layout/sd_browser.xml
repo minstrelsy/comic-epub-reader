@@ -14,72 +14,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
 <FrameLayout
+    android:id="@+id/browser_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-
-    <TabHost
-        android:id="@+id/sdTabhost"
+    <ListView
+        android:id="@+id/list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-
-        <RelativeLayout
-            android:id="@+id/sdBrowserTabHostContent"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            >
-
-            <TabWidget
-                android:id="@+id/tabWidget"
-                style="@style/Theme.tabWidget"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                />
-
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/adsContainer"
-                android:layout_below="@android:id/tabs"
-                >
-
-                <FrameLayout
-                    android:id="@+id/sdBrowserTabBrowser"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    >
-
-                    <ListView
-                        android:id="@android:id/list"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"/>
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/sdBrowserTabRecent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    >
-
-                    <ListView
-                        android:id="@android:id/list"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"/>
-                </FrameLayout>
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@id/adsContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal"/>
-        </RelativeLayout>
-    </TabHost>
+        android:layout_height="wrap_content"/>
 </FrameLayout>

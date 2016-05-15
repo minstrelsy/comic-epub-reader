@@ -18,7 +18,6 @@ package net.robotmedia.acv;
 import java.util.HashMap;
 
 import net.androidcomics.acv.R;
-import android.app.Activity;
 
 public class Constants {
 
@@ -49,7 +48,6 @@ public class Constants {
 	public static final String INPUT_CORNER_BOTTOM_RIGHT = "corner_bottom_right";
 	public static final String INPUT_VOLUME_UP = "volume_up";
 	public static final String INPUT_VOLUME_DOWN = "volume_down";
-
 	
 	// Control keys
 	public static final String CONTROL_DEFAULTS_KEY = "control_defaults";
@@ -98,8 +96,8 @@ public class Constants {
 	public static final String MP4_EXTENSION = "mp4";
 	public static final String MP3_EXTENSION = "mp3";
 	
-	public static HashMap<String, Integer> getSupportedExtensions(Activity activity) {
-		HashMap<String, Integer> supportedExtensions = new HashMap<String, Integer>();
+	public static HashMap<String, Integer> getSupportedExtensions() {
+		HashMap<String, Integer> supportedExtensions = new HashMap<>();
 		supportedExtensions.put(Constants.ACV_EXTENSION, R.drawable.icon);
 		supportedExtensions.put(Constants.ZIP_EXTENSION, R.drawable.compress);			
 		supportedExtensions.put(Constants.RAR_EXTENSION, R.drawable.compress);
@@ -170,16 +168,4 @@ public class Constants {
 	public static final String EVENT_VALUE_UNDEFINED = "undefined";
 	public static final String EVENT_VALUE_FOLDER = "folder";
 	public static final String EVENT_VALUE_MENU = "menu";
-
-	public static final String METADATA_FILE = "comic.xml";
-	
-	// Legacy constants
-	@Deprecated
-	public static final String COMIC_PATH_LEGACY_KEY = "file";
-	@Deprecated
-	public static final String LEGACY_FLING_ENABLED_KEY = "fling_enabled";	
-	@Deprecated
-	public static final String LEGACY_STARTUP_UPDATE_CHECK_KEY = "startup_update_check";
-	@Deprecated
-	public static final String LEGACY_TEMP_PATH = "acv/temp";
 }
