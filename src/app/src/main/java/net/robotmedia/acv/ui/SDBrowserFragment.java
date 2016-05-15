@@ -37,8 +37,9 @@ public class SDBrowserFragment extends Fragment {
 	private PreferencesController preferencesController;
     private String comicsPath;
     private File currentDirectory;
+    private LinearLayout emptyFolderLayout;
 
-	/**
+    /**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
@@ -67,13 +68,14 @@ public class SDBrowserFragment extends Fragment {
         supportedExtensions = Constants.getSupportedExtensions();
         preferencesController = new PreferencesController(getActivity());
         mInflater = inflater;
+        emptyFolderLayout = (LinearLayout) view.findViewById(R.id.empty_folder_layout);
+        browserListView = (ListView) view.findViewById(R.id.list);
 
         String storageState = Environment.getExternalStorageState();
 
         if (Environment.MEDIA_MOUNTED.equals(storageState)) {
             currentDirectory = new File(comicsPath);
 
-            browserListView = (ListView) view.findViewById(R.id.list);
             browserListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     File file = (File) parent.getItemAtPosition(position);
@@ -127,6 +129,17 @@ public class SDBrowserFragment extends Fragment {
 	private void changeDirectory(File directory) {
         getActivity().setTitle(Objects.equals(directory.getName(), "0") ? getResources().getString(R.string.file) : directory.getName());
 		preferencesController.savePreference(Constants.COMICS_PATH_KEY, directory.getAbsolutePath());
+
+        if(directory.list() == null || directory.list().length == 0) {
+            currentDirectory = directory;
+            browserListView.setVisibility(ListView.GONE);
+            emptyFolderLayout.setVisibility(LinearLayout.VISIBLE);
+            return;
+        }
+
+        browserListView.setVisibility(ListView.VISIBLE);
+        emptyFolderLayout.setVisibility(LinearLayout.GONE);
+
 		browserListView.setAdapter(new ListAdapter(directory));
 	}
 
@@ -155,7 +168,6 @@ public class SDBrowserFragment extends Fragment {
 
 	public class ListAdapter extends BaseAdapter {
 		ArrayList<File> contents = new ArrayList<>();
-		private boolean isEmpty;
 
 		public ListAdapter(File current) {
             currentDirectory = current;
@@ -165,7 +177,6 @@ public class SDBrowserFragment extends Fragment {
 		private void filterContents() {
 			String[] allContents = currentDirectory.list();
 			contents = new ArrayList<>();
-            isEmpty = true;
 
 			if (allContents != null) {
 				String path = currentDirectory.getPath();
@@ -182,14 +193,9 @@ public class SDBrowserFragment extends Fragment {
 					}
 				}
 			}
-
-            isEmpty = (contents.size() == 0);
 		}
 
 		public int getCount() {
-			if (isEmpty)
-				return contents.size() + 1;
-
             return contents.size();
 		}
 
@@ -205,11 +211,6 @@ public class SDBrowserFragment extends Fragment {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (isEmpty) {
-				LayoutInflater inflater = getActivity().getLayoutInflater();
-				return inflater.inflate(R.layout.sd_item_empty, null);
-			}
-
 			ViewHolder holder;
 			File file = contents.get(position);
 			String name = file.getName();

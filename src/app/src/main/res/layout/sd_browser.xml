@@ -16,24 +16,51 @@
 -->
 
 <LinearLayout
-    android:id="@+id/browser_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
-    
+
     <TextView
         android:id="@+id/browser_back"
         style="@style/Theme.SDItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sd_browser_back"
-        android:padding="15dp"
+        android:background="@drawable/selectable_textview_colors"
         android:focusable="true"
-        android:background="@drawable/selectable_textview_colors"/>
-    
+        android:padding="15dp"
+        android:text="@string/sd_browser_back"/>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/empty_folder_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/empty_folder_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/file_not_found"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/sd_item_empty_text"
+            style="@style/Theme.SDItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_below="@id/empty_folder_img"
+            android:text="@string/sd_browser_empty"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
 </LinearLayout>

@@ -37,17 +37,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_toEndOf="@id/sd_item_icon"
         android:orientation="vertical"
         android:focusable="false"
-        android:paddingLeft="8dp">
+        android:paddingLeft="8dp"
+        android:layout_toStartOf="@+id/checkBox"
+        android:layout_toEndOf="@+id/sd_item_icon">
 
         <TextView
             android:id="@+id/sd_item_name"
             style="@style/Theme.SDItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"/>
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/sd_item_size"
