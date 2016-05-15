@@ -4,10 +4,13 @@
              android:layout_height="match_parent"
              tools:context="net.robotmedia.acv.ui.ShelfFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+    <net.robotmedia.acv.view.ShelfView
+        android:id="@+id/shelf_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="22dip"
+        android:columnWidth="130dip"
+        android:fastScrollEnabled="true" />
 
 </FrameLayout>
