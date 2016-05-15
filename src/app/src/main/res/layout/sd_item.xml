@@ -24,7 +24,7 @@
     <ImageView
         android:id="@+id/sd_item_icon"
         style="@style/Theme.image2"
-        android:src="@drawable/ic_menu_archive"
+        android:src="@drawable/ic_folder"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentStart="true"

@@ -7,19 +7,19 @@
                 android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_my_books"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_books"
                     android:title="@string/my_books"/>
                 <item
                     android:id="@+id/nav_my_comics"
-                    android:icon="@drawable/ic_menu_slideshow"
+                    android:icon="@drawable/ic_bubble"
                     android:title="@string/my_comics"/>
                 <item
                     android:id="@+id/nav_favorites"
-                    android:icon="@drawable/ic_menu_star"
+                    android:icon="@drawable/ic_favorite"
                     android:title="@string/favorites"/>
                 <item
                     android:id="@+id/nav_collections"
-                    android:icon="@drawable/ic_menu_archive"
+                    android:icon="@drawable/ic_folder"
                     android:title="@string/collections"/>
             </group>
         </menu>
@@ -31,7 +31,7 @@
                 android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_add_file"
-                    android:icon="@drawable/ic_menu_archive"
+                    android:icon="@drawable/ic_folder"
                     android:title="@string/files"/>
             </group>
         </menu>
@@ -44,7 +44,7 @@
                 android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@android:drawable/ic_menu_manage"
+                    android:icon="@drawable/ic_settings"
                     android:title="@string/settings"/>
             </group>
         </menu>

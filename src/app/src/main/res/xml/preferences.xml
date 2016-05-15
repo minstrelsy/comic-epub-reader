@@ -22,17 +22,17 @@
 			android:targetPackage="net.androidcomics.acv" android:targetClass="net.robotmedia.acv.ui.settings.mobile.VisualSettingsActivity" />
 	</net.robotmedia.acv.ui.settings.IconPreferenceScreen>
 	<net.robotmedia.acv.ui.settings.IconPreferenceScreen
-		android:title="@string/category_controls_title" settings:icon="@drawable/ic_settings_accessibility">
+		android:title="@string/category_controls_title" settings:icon="@drawable/ic_settings">
 		<intent android:action="android.intent.action.MAIN"
 			android:targetPackage="net.androidcomics.acv" android:targetClass="net.robotmedia.acv.ui.settings.mobile.ControlSettingsActivity" />
 	</net.robotmedia.acv.ui.settings.IconPreferenceScreen>
 	<net.robotmedia.acv.ui.settings.IconPreferenceScreen
-		android:title="@string/category_memory_title" settings:icon="@drawable/ic_settings_storage">
+		android:title="@string/category_memory_title" settings:icon="@android:drawable/sym_contact_card">
 		<intent android:action="android.intent.action.MAIN"
 			android:targetPackage="net.androidcomics.acv" android:targetClass="net.robotmedia.acv.ui.settings.mobile.StorageSettingsActivity" />
 	</net.robotmedia.acv.ui.settings.IconPreferenceScreen>
 	<net.robotmedia.acv.ui.settings.IconPreferenceScreen
-		android:title="@string/category_advanced_title" settings:icon="@drawable/ic_settings_privacy">
+		android:title="@string/category_advanced_title" settings:icon="@android:drawable/ic_secure">
 		<intent android:action="android.intent.action.MAIN"
 			android:targetPackage="net.androidcomics.acv" 
 			android:targetClass="net.robotmedia.acv.ui.settings.mobile.AdvancedSettingsActivity" />
