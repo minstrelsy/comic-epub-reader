@@ -143,17 +143,15 @@ public class SDBrowserFragment extends Fragment {
 		browserListView.setAdapter(new ListAdapter(directory));
 	}
 
-	public void fragmentOnKeyDown(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if(!browserBack(currentDirectory)){
-                setResultAndFinish(null);
-            }
+	public void fragmentOnBackPressed() {
+        if(!browserBack(currentDirectory)){
+            setResultAndFinish(null);
         }
     }
 
 	private void setResultAndFinish(File file) {
-		Intent result = new Intent();
-		result.putExtra(Constants.COMIC_PATH_KEY, file.getAbsolutePath());
+//		Intent result = new Intent();
+//		result.putExtra(Constants.COMIC_PATH_KEY, file.getAbsolutePath());
 //        parent.setResult(parent.RESULT_OK, result);
 //        parent.finish();
 	}

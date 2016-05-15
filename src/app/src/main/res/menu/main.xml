@@ -105,17 +105,6 @@
         </menu>
     </item>
     <item
-        android:id="@+id/item_open"
-        android:alphabeticShortcut="@string/item_open_shortcut"
-        android:icon="@drawable/ic_menu_archive"
-        android:title="@string/item_open_title"/>
-    <item
-        android:id="@+id/item_settings"
-        android:alphabeticShortcut="@string/item_settings_shortcut"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/item_settings_title"
-        />
-    <item
         android:id="@+id/menu_close"
         android:alphabeticShortcut="@string/menu_close_shortcut"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"

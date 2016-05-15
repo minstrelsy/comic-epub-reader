@@ -561,12 +561,6 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		case R.id.item_rotate:
 			actionValue = Constants.ACTION_VALUE_ROTATE;
 			break;
-		case R.id.item_settings:
-			actionValue = Constants.ACTION_VALUE_SETTINGS;
-			break;
-		case R.id.item_open:
-			actionValue = Constants.ACTION_VALUE_SD_BROWSER;
-			break;
 		case R.id.item_share_app:
 			actionValue = Constants.ACTION_VALUE_SHARE_APP;
 			break;

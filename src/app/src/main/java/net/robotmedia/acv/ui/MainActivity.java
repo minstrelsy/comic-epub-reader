@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ViewPager viewPager;
     private FrameLayout frameLayout;
     private TabLayout tabLayout;
-
+    private Fragment sdBrowserFragment;
+    private int drawerItemSelected;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,8 +99,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } if(drawerItemSelected == R.id.nav_add_file){
+            ((SDBrowserFragment) sdBrowserFragment).fragmentOnBackPressed();
         } else {
             super.onBackPressed();
         }
@@ -136,17 +140,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 frameLayout.setVisibility(FrameLayout.GONE);
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
-
                 break;
             case R.id.nav_add_file:
                 viewPager.setVisibility(ViewPager.GONE);
                 tabLayout.setVisibility(TabLayout.GONE);
                 frameLayout.setVisibility(FrameLayout.VISIBLE);
 
-                fragment = new SDBrowserFragment();
+                sdBrowserFragment = new SDBrowserFragment();
                 String comicsPath = preferences.getString(Constants.COMICS_PATH_KEY, Environment.getExternalStorageDirectory().getAbsolutePath());
                 bundle.putString(comicsPath, Constants.COMIC_PATH_KEY);
-                fragment.setArguments(bundle);
+                sdBrowserFragment.setArguments(bundle);
+                fragment = sdBrowserFragment;
+
+                drawerItemSelected = R.id.nav_add_file;
                 break;
             case R.id.nav_settings:
                 viewPager.setVisibility(ViewPager.GONE);
@@ -170,9 +176,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_settings:
-                startSettingsActivity();
-                return true;
             case R.id.item_share_app:
                 shareApp();
                 return true;
