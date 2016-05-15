@@ -39,6 +39,7 @@ public class SDBrowserFragment extends Fragment {
     private File currentDirectory;
     private LinearLayout emptyFolderLayout;
     private OnFragmentInteractionListener mListener;
+    private ArrayList<File> selectedFiles;
 
     /**
 	 * Use this factory method to create a new instance of
@@ -60,6 +61,7 @@ public class SDBrowserFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         comicsPath = getArguments().getString(Constants.COMICS_PATH_KEY, Environment.getExternalStorageDirectory().getAbsolutePath());
+        selectedFiles = new ArrayList<>();
 	}
 
     @Override
@@ -140,10 +142,8 @@ public class SDBrowserFragment extends Fragment {
     }
 
 	private void setResultAndFinish(ArrayList<File> files) {
-        if(files != null) {
+        if(files != null)
             mListener.onFilesSelected(files);
-            return;
-        }
 
         mListener.finishThisFragment(this);
 	}
