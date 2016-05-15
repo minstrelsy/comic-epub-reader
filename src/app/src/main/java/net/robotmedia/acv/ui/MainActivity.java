@@ -37,10 +37,14 @@ import android.view.*;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
+import java.io.File;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         RecentReadsFragment.OnFragmentInteractionListener,
         ShelfFragment.OnFragmentInteractionListener,
-        RecentlyAddedFragment.OnFragmentInteractionListener {
+        RecentlyAddedFragment.OnFragmentInteractionListener,
+        SDBrowserFragment.OnFragmentInteractionListener{
 
     protected SharedPreferences preferences;
     private ViewPager viewPager;
@@ -86,6 +90,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onFilesSelected(ArrayList<File> files) {
+        //ToDo
+    }
+
+    @Override
+    public void finishThisFragment(Fragment fragment) {
+        //ToDo
     }
 
     private void setupViewPager(ViewPager viewPager) {

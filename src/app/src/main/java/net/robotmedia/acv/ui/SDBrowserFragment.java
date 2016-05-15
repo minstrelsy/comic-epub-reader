@@ -16,7 +16,6 @@
 package net.robotmedia.acv.ui;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.*;
 
 import net.androidcomics.acv.R;
@@ -24,7 +23,7 @@ import net.robotmedia.acv.Constants;
 import net.robotmedia.acv.logic.PreferencesController;
 import net.robotmedia.acv.utils.FileUtils;
 import android.app.*;
-import android.content.*;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.*;
@@ -38,6 +37,7 @@ public class SDBrowserFragment extends Fragment {
     private String comicsPath;
     private File currentDirectory;
     private LinearLayout emptyFolderLayout;
+    private OnFragmentInteractionListener mListener;
 
     /**
 	 * Use this factory method to create a new instance of
@@ -76,26 +76,6 @@ public class SDBrowserFragment extends Fragment {
         if (Environment.MEDIA_MOUNTED.equals(storageState)) {
             currentDirectory = new File(comicsPath);
 
-            browserListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    File file = (File) parent.getItemAtPosition(position);
-                    if ((file != null) && (file.isDirectory())) {
-                        String[] images = file.list(new FilenameFilter() {
-                            public boolean accept(File dir, String filename) {
-                                String ext = FileUtils.getFileExtension(filename);
-                                return FileUtils.isImage(ext);
-                            }
-                        });
-
-                        if (images.length > 0) {
-                            setResultAndFinish(file);
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-            });
-
             browserListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     File file = (File) parent.getItemAtPosition(position);
@@ -107,7 +87,7 @@ public class SDBrowserFragment extends Fragment {
                     if (file.isDirectory()) {
                         changeDirectory(file);
                     } else if (file.exists()) {
-                        setResultAndFinish(file);
+                        //ToDo: Display actions menu
                     }
                 }
             });
@@ -149,11 +129,13 @@ public class SDBrowserFragment extends Fragment {
         }
     }
 
-	private void setResultAndFinish(File file) {
-//		Intent result = new Intent();
-//		result.putExtra(Constants.COMIC_PATH_KEY, file.getAbsolutePath());
-//        parent.setResult(parent.RESULT_OK, result);
-//        parent.finish();
+	private void setResultAndFinish(ArrayList<File> files) {
+        if(files != null) {
+            mListener.onFilesSelected(files);
+            return;
+        }
+
+        mListener.finishThisFragment(this);
 	}
 
     private boolean browserBack(File file){
@@ -249,4 +231,33 @@ public class SDBrowserFragment extends Fragment {
 		TextView name;
 		TextView size;
 	}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     */
+    public interface OnFragmentInteractionListener {
+        void onFilesSelected(ArrayList<File> selectedFiles);
+        void finishThisFragment(Fragment fragment);
+    }
 }
