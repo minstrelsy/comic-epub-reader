@@ -16,6 +16,7 @@
 package net.robotmedia.acv.ui;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.*;
 
 import net.androidcomics.acv.R;
@@ -109,9 +110,16 @@ public class SDBrowserFragment extends Fragment {
 	private void changeDirectory(File directory) {
         getActivity().setTitle(Objects.equals(directory.getName(), "0") ? getResources().getString(R.string.file) : directory.getName());
 		preferencesController.savePreference(Constants.COMICS_PATH_KEY, directory.getAbsolutePath());
+        currentDirectory = directory;
 
-        if(directory.list() == null || directory.list().length == 0) {
-            currentDirectory = directory;
+        File[] validFiles = directory.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String filename) {
+                String ext = FileUtils.getFileExtension(filename);
+                return filename.indexOf(".") != 0 && (supportedExtensions.containsKey(ext.toLowerCase()) || dir.isDirectory());
+            }
+        });
+
+        if(validFiles.length == 0) {
             browserListView.setVisibility(ListView.GONE);
             emptyFolderLayout.setVisibility(LinearLayout.VISIBLE);
             return;
@@ -120,7 +128,7 @@ public class SDBrowserFragment extends Fragment {
         browserListView.setVisibility(ListView.VISIBLE);
         emptyFolderLayout.setVisibility(LinearLayout.GONE);
 
-		browserListView.setAdapter(new ListAdapter(directory));
+		browserListView.setAdapter(new ListAdapter(validFiles));
 	}
 
 	public void fragmentOnBackPressed() {
@@ -141,47 +149,26 @@ public class SDBrowserFragment extends Fragment {
     private boolean browserBack(File file){
         if(file != null && file.getParent() != null){
             changeDirectory(file.getParentFile());
+            return true;
         }
 
         return false;
     }
 
 	public class ListAdapter extends BaseAdapter {
-		ArrayList<File> contents = new ArrayList<>();
+		File[] files;
 
-		public ListAdapter(File current) {
-            currentDirectory = current;
-			filterContents();
-		}
-
-		private void filterContents() {
-			String[] allContents = currentDirectory.list();
-			contents = new ArrayList<>();
-
-			if (allContents != null) {
-				String path = currentDirectory.getPath();
-
-				for (int i = 0; i < allContents.length; i++) {
-					String contentName = allContents[i];
-
-					if (contentName.indexOf(".") != 0) { // Exclude hidden files
-						String extension = FileUtils.getFileExtension(contentName);
-                        File contentFile = new File(path, contentName);
-
-                        if (supportedExtensions.containsKey(extension.toLowerCase()) || contentFile.isDirectory())
-                            contents.add(contentFile);
-					}
-				}
-			}
+		public ListAdapter(File[] files) {
+            this.files = files;
 		}
 
 		public int getCount() {
-            return contents.size();
+            return files.length;
 		}
 
 		public File getItem(int position) {
-			if (position < contents.size())
-				return contents.get(position);
+			if (position < files.length)
+				return files[position];
 
             return null;
 		}
@@ -192,7 +179,7 @@ public class SDBrowserFragment extends Fragment {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
-			File file = contents.get(position);
+			File file = files[position];
 			String name = file.getName();
 			String extension = FileUtils.getFileExtension(name);
 
@@ -223,7 +210,6 @@ public class SDBrowserFragment extends Fragment {
 
 			return convertView;
 		}
-
 	}
 
 	static class ViewHolder {
