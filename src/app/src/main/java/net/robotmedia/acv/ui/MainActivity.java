@@ -40,7 +40,7 @@ import android.widget.FrameLayout;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         RecentReadsFragment.OnFragmentInteractionListener,
         ShelfFragment.OnFragmentInteractionListener,
-        RecentlAddedFragment.OnFragmentInteractionListener {
+        RecentlyAddedFragment.OnFragmentInteractionListener {
 
     protected SharedPreferences preferences;
     private ViewPager viewPager;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new RecentReadsFragment(), "RECENT READS");
         adapter.addFragment(new ShelfFragment(), "COMICS");
-        adapter.addFragment(new RecentlAddedFragment(), "RECENTLY ADDED");
+        adapter.addFragment(new RecentlyAddedFragment(), "RECENTLY ADDED");
         viewPager.setAdapter(adapter);
     }
 

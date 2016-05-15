@@ -58,7 +58,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.support.v7.app.AppCompatActivity;
 
 public class ComicViewerActivity extends AppCompatActivity implements OnGestureListener, GestureDetector.OnDoubleTapListener, ComicViewListener,
-        NavigationView.OnNavigationItemSelectedListener, RecentReadsFragment.OnFragmentInteractionListener, ShelfFragment.OnFragmentInteractionListener, RecentlAddedFragment.OnFragmentInteractionListener {
+        NavigationView.OnNavigationItemSelectedListener, RecentReadsFragment.OnFragmentInteractionListener, ShelfFragment.OnFragmentInteractionListener, RecentlyAddedFragment.OnFragmentInteractionListener {
 
 	public final static String POSITION_EXTRA = "position";
 
@@ -290,7 +290,7 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new RecentReadsFragment(), "RECENT READS");
         adapter.addFragment(new ShelfFragment(), "COMICS");
-        adapter.addFragment(new RecentlAddedFragment(), "RECENTLY ADDED");
+        adapter.addFragment(new RecentlyAddedFragment(), "RECENTLY ADDED");
         viewPager.setAdapter(adapter);
     }
 
@@ -917,7 +917,7 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		
 		String[] allContents = parent.list();
 		TreeMap<String, File> aux = new TreeMap<String, File>();
-		HashMap<String, Integer> supportedExtensions = Constants.getSupportedExtensions(this);
+		HashMap<String, Integer> supportedExtensions = Constants.getSupportedExtensions();
 		if (allContents != null) {
 			String path = parent.getPath();
 			for (int i = 0; i < allContents.length; i++) {
