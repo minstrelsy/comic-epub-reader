@@ -69,7 +69,7 @@
 
     </RelativeLayout>
 
-    <net.robotmedia.acv.ui.widget.ComicView
+    <net.nkbits.epubcomic.ui.widget.ComicView
         android:id="@+id/screen"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

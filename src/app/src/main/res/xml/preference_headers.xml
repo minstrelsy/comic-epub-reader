@@ -17,28 +17,28 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <header
-        android:fragment="net.robotmedia.acv.ui.settings.tablet.VisualSettingsFragment"
+        android:fragment="net.nkbits.epubcomic.ui.settings.tablet.VisualSettingsFragment"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/category_visual_title" />
     <header
-        android:fragment="net.robotmedia.acv.ui.settings.tablet.ControlSettingsFragment"
+        android:fragment="net.nkbits.epubcomic.ui.settings.tablet.ControlSettingsFragment"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/category_controls_title" />
     <header
-        android:fragment="net.robotmedia.acv.ui.settings.tablet.StorageSettingsFragment"
+        android:fragment="net.nkbits.epubcomic.ui.settings.tablet.StorageSettingsFragment"
         android:icon="@android:drawable/sym_contact_card"
         android:title="@string/category_memory_title" />
     <header
-        android:fragment="net.robotmedia.acv.ui.settings.tablet.AdvancedSettingsFragment"
+        android:fragment="net.nkbits.epubcomic.ui.settings.tablet.AdvancedSettingsFragment"
         android:icon="@android:drawable/ic_secure"
         android:title="@string/category_advanced_title" />
     <header
-        android:fragment="net.robotmedia.acv.ui.settings.tablet.AboutSettingsFragment"
+        android:fragment="net.nkbits.epubcomic.ui.settings.tablet.AboutSettingsFragment"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/category_about_title" />
     <header
         android:id="@+id/header_premium"
-        android:fragment="net.robotmedia.acv.ui.settings.tablet.PremiumSettingsFragment"
+        android:fragment="net.nkbits.epubcomic.ui.settings.tablet.PremiumSettingsFragment"
         android:icon="@drawable/ic_favorite"
         android:title="@string/category_premium_title" />
     
