@@ -191,11 +191,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_share_app:
-                shareApp();
+            case R.id.action_select_all:
                 return true;
-            case R.id.menu_close:
-                finish();
+            case R.id.action_import:
                 return true;
         }
 

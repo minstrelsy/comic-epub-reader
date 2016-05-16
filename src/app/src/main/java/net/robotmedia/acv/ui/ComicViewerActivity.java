@@ -383,84 +383,13 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 	public void onPanelClosed (int featureId, Menu menu) {
 		super.onPanelClosed(featureId, menu);
 	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		String actionValue = null;
-		switch (item.getItemId()) {
-		case R.id.item_zoom_in:
-			actionValue = Constants.ACTION_VALUE_ZOOM_IN;
-			break;
-		case R.id.item_zoom_out:
-			actionValue = Constants.ACTION_VALUE_ZOOM_OUT;
-			break;
-		case R.id.item_fit_width:
-			actionValue = Constants.ACTION_VALUE_FIT_WIDTH;
-			break;
-		case R.id.item_fit_height:
-			actionValue = Constants.ACTION_VALUE_FIT_HEIGHT;
-			break;
-		case R.id.item_actual_size:
-			actionValue = Constants.ACTION_VALUE_ACTUAL_SIZE;
-			break;
-		case R.id.item_first:
-			actionValue = Constants.ACTION_VALUE_FIRST;
-			break;
-		case R.id.item_previous:
-			actionValue = Constants.ACTION_VALUE_PREVIOUS;
-			break;
-		case R.id.item_next:
-			actionValue = Constants.ACTION_VALUE_NEXT;
-			break;
-		case R.id.item_previous_screen:
-			actionValue = Constants.ACTION_VALUE_PREVIOUS_SCREEN;
-			break;
-		case R.id.item_next_screen:
-			actionValue = Constants.ACTION_VALUE_NEXT_SCREEN;
-			break;
-		case R.id.item_last:
-			actionValue = Constants.ACTION_VALUE_LAST;
-			break;
-		case R.id.item_browse:
-			actionValue = Constants.ACTION_VALUE_SCREEN_BROWSER;
-			break;
-		case R.id.item_rotate:
-			actionValue = Constants.ACTION_VALUE_ROTATE;
-			break;
-		case R.id.item_share_app:
-			actionValue = Constants.ACTION_VALUE_SHARE_APP;
-			break;
-		case R.id.item_set_as:
-			actionValue = Constants.ACTION_SET_AS;
-			break;
-		case R.id.item_share_screen:
-			actionValue = Constants.ACTION_VALUE_SHARE_SCREEN;
-			break;
-		case R.id.menu_close:
-			actionValue = Constants.ACTION_CLOSE;
-			break;
-		}
-		if (actionValue != null) {
-			return this.actionWithValue(actionValue, Constants.EVENT_VALUE_MENU, null);
-		} else {
-			return false;
-		}
-	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean comicLoaded = isComicLoaded();
-		menu.findItem(R.id.item_share_screen).setVisible(comicLoaded);
-		menu.findItem(R.id.item_set_as).setVisible(comicLoaded);
-		menu.findItem(R.id.item_navigate).setVisible(comicLoaded);
-		menu.findItem(R.id.item_zoom).setVisible(comicLoaded);
-		menu.findItem(R.id.item_browse).setVisible(comicLoaded);
-		menu.findItem(R.id.item_rotate).setVisible(comicLoaded);
-		
+
 		if (comicLoaded) {
 			boolean considerFrames = comic.hasFrames(mScreen.getIndex());
-			menu.findItem(R.id.item_next_screen).setVisible(considerFrames);
-			menu.findItem(R.id.item_previous_screen).setVisible(considerFrames);
 		}
 		return true;
 		
