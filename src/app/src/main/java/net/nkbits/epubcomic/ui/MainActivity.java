@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout frameLayout;
     private TabLayout tabLayout;
     private Fragment sdBrowserFragment;
+    private MenuItem importAction;
+    private MenuItem selectAllAction;
     private int drawerItemSelected;
 
     @Override
@@ -99,7 +101,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void finishThisFragment(Fragment fragment) {
-        //ToDo
+        switch (drawerItemSelected) {
+            case R.id.nav_add_file:
+                findViewById(R.id.action_import).setVisibility(View.GONE);
+                findViewById(R.id.action_select_all).setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    @Override
+    public void hideSelectAll(){
+        selectAllAction.setVisible(false);
+    }
+
+    public void showSelectAll(){
+        selectAllAction.setVisible(true);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -126,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        importAction = menu.findItem(R.id.action_import);
+        selectAllAction = menu.findItem(R.id.action_select_all);
         return true;
     }
 
@@ -165,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putString(comicsPath, Constants.COMIC_PATH_KEY);
                 sdBrowserFragment.setArguments(bundle);
                 fragment = sdBrowserFragment;
+                selectAllAction.setVisible(true);
 
                 drawerItemSelected = R.id.nav_add_file;
                 break;
@@ -191,8 +210,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_select_all:
+                selectAllAction.setVisible(false);
+                importAction.setVisible(true);
+                ((SDBrowserFragment) sdBrowserFragment).selectAll();
                 return true;
             case R.id.action_import:
+                ((SDBrowserFragment) sdBrowserFragment).importFiles();
                 return true;
         }
 

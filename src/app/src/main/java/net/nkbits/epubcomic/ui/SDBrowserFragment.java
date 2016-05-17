@@ -109,9 +109,24 @@ public class SDBrowserFragment extends Fragment {
         return view;
     }
 
-	private void changeDirectory(File directory) {
+	public void fragmentOnBackPressed() {
+        if(!browserBack(currentDirectory)){
+            setResultAndFinish(null);
+        }
+    }
+
+    public void selectAll(){
+        ((ListAdapter) browserListView.getAdapter()).selectAll();
+    }
+
+    public void importFiles(){
+        setResultAndFinish(selectedFiles);
+    }
+
+    /*Private*/
+    private void changeDirectory(File directory) {
         getActivity().setTitle(Objects.equals(directory.getName(), "0") ? getResources().getString(R.string.file) : directory.getName());
-		preferencesController.savePreference(Constants.COMICS_PATH_KEY, directory.getAbsolutePath());
+        preferencesController.savePreference(Constants.COMICS_PATH_KEY, directory.getAbsolutePath());
         currentDirectory = directory;
 
         File[] validFiles = directory.listFiles(new FilenameFilter() {
@@ -132,13 +147,7 @@ public class SDBrowserFragment extends Fragment {
         browserListView.setVisibility(ListView.VISIBLE);
         emptyFolderLayout.setVisibility(LinearLayout.GONE);
 
-		browserListView.setAdapter(new ListAdapter(validFiles));
-	}
-
-	public void fragmentOnBackPressed() {
-        if(!browserBack(currentDirectory)){
-            setResultAndFinish(null);
-        }
+        browserListView.setAdapter(new ListAdapter(validFiles));
     }
 
 	private void setResultAndFinish(ArrayList<File> files) {
@@ -181,7 +190,7 @@ public class SDBrowserFragment extends Fragment {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
-			File file = files[position];
+			final File file = files[position];
 			String name = file.getName();
 			String extension = FileUtils.getFileExtension(name);
 
@@ -210,8 +219,32 @@ public class SDBrowserFragment extends Fragment {
 				holder.size.setText(String.valueOf(size) + " KB");
 			}
 
+            CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        selectedFiles.add(file);
+
+                        if(selectedFiles.size() == 1);
+                            mListener.hideSelectAll();
+
+                        return;
+                    }
+
+                    selectedFiles.remove(file);
+
+                    if(selectedFiles.size() == 0)
+                        mListener.showSelectAll();
+                }
+            });
+
 			return convertView;
 		}
+
+        public void selectAll(){
+
+        }
 	}
 
 	static class ViewHolder {
@@ -247,5 +280,7 @@ public class SDBrowserFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFilesSelected(ArrayList<File> selectedFiles);
         void finishThisFragment(Fragment fragment);
+        void hideSelectAll();
+        void showSelectAll();
     }
 }

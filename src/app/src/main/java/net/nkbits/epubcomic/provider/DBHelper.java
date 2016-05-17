@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 public class DBHelper {
-
 	   private Context mContext;
 	   private SQLiteDatabase mDB;
 
@@ -147,5 +146,4 @@ public class DBHelper {
 		   cursor.close();
 		   return files;
 	   }
-	
 }
