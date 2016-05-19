@@ -17,6 +17,7 @@ package net.nkbits.epubcomic.ui;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import net.androidcomics.acv.R;
@@ -115,8 +116,12 @@ public class SDBrowserFragment extends Fragment {
         }
     }
 
-    public void selectAll(){
-        ((ListAdapter) browserListView.getAdapter()).selectAll();
+    public void selectAll() {
+        for(int i = 0; i < browserListView.getChildCount(); i++){
+            browserListView.getChildAt(i).findViewById(R.id.checkBox).setSelected(true);
+        }
+
+        ((ListAdapter)browserListView.getAdapter()).selectAll();
     }
 
     public void importFiles(){
@@ -243,7 +248,7 @@ public class SDBrowserFragment extends Fragment {
 		}
 
         public void selectAll(){
-
+            selectedFiles = (ArrayList<File>) Arrays.asList(files);
         }
 	}
 
