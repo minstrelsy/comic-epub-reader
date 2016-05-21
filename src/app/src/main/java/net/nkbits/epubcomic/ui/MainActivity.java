@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bundle.putString(comicsPath, Constants.COMIC_PATH_KEY);
                 sdBrowserFragment.setArguments(bundle);
                 fragment = sdBrowserFragment;
+                importAction.setVisible(false);
                 selectAllAction.setVisible(true);
 
                 drawerItemSelected = R.id.nav_add_file;
