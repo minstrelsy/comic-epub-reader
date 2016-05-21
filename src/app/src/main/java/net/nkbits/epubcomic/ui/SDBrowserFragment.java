@@ -118,7 +118,7 @@ public class SDBrowserFragment extends Fragment {
 
     public void selectAll() {
         for(int i = 0; i < browserListView.getChildCount(); i++){
-            browserListView.getChildAt(i).findViewById(R.id.checkBox).setSelected(true);
+            ((CheckBox)browserListView.getChildAt(i).findViewById(R.id.checkBox)).setChecked(true);
         }
 
         ((ListAdapter)browserListView.getAdapter()).selectAll();
@@ -225,6 +225,10 @@ public class SDBrowserFragment extends Fragment {
 			}
 
             CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
+
+            if(selectedFiles.contains(file))
+                checkBox.setChecked(true);
+
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -248,7 +252,10 @@ public class SDBrowserFragment extends Fragment {
 		}
 
         public void selectAll(){
-            selectedFiles = (ArrayList<File>) Arrays.asList(files);
+            for(int i = 0; i < files.length; i++){
+                if(!selectedFiles.contains(files[i]))
+                    selectedFiles.add(files[i]);
+            }
         }
 	}
 
@@ -267,6 +274,19 @@ public class SDBrowserFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Deprecated
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+
+        if (activity instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+
     }
 
     @Override
