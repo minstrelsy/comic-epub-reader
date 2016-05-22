@@ -18,7 +18,9 @@ package net.nkbits.epubcomic.ui;
 import net.androidcomics.acv.R;
 import net.nkbits.epubcomic.Constants;
 import net.nkbits.epubcomic.adapter.ViewPagerAdapter;
+import net.nkbits.epubcomic.db.DBHelper;
 import net.nkbits.epubcomic.ui.settings.tablet.SettingsActivityTablet;
+import net.nkbits.epubcomic.utils.FileUtils;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -37,7 +39,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         RecentReadsFragment.OnFragmentInteractionListener,
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem importAction;
     private MenuItem selectAllAction;
     private int drawerItemSelected;
+    private DBHelper dbHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +95,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         frameLayout.setVisibility(FrameLayout.GONE);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        dbHelper = new DBHelper(this);
+    }
+
+    @Override
+    public void onStop () {
+        dbHelper.deleteFiles();
+        super.onStop();
     }
 
     @Override
@@ -96,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onFilesSelected(ArrayList<File> files) {
-        //ToDo
+        insertFiles(files);
     }
 
     @Override
@@ -236,5 +252,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message));
         Intent chooser = Intent.createChooser(intent, getString(R.string.item_share_app_title));
         startActivity(chooser);
+    }
+
+    private void insertFiles(ArrayList<File> files){
+        final HashMap<String, Integer> supportedExtensions = Constants.getSupportedExtensions();
+
+        for(int i = 0; i < files.size(); i++){
+            File file = files.get(i);
+
+            if(file.isDirectory()){
+                File[] validFiles = file.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String filename) {
+                        String ext = FileUtils.getFileExtension(filename);
+                        File file = new File(dir.getPath(), filename);
+
+                        return filename.indexOf(".") != 0 && (supportedExtensions.containsKey(ext.toLowerCase()) || file.isDirectory());
+                    }
+                });
+
+                insertFiles(new ArrayList<>(Arrays.asList(validFiles)));
+                continue;
+            }
+
+            String ext = FileUtils.getFileExtension(file.getName());
+            boolean isBook = Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase()) || Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase());
+
+            if(!dbHelper.existsFile(file.getPath()))
+                dbHelper.insertFile(file.getPath(), isBook);
+        }
     }
 }
