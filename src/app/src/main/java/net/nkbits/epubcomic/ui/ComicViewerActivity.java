@@ -24,7 +24,6 @@ import net.androidcomics.acv.R;
 import net.nkbits.epubcomic.Constants;
 import net.nkbits.epubcomic.comic.Comic;
 import net.nkbits.epubcomic.logic.*;
-import net.nkbits.epubcomic.db.HistoryManager;
 import net.nkbits.epubcomic.ui.settings.tablet.SettingsActivityTablet;
 import net.nkbits.epubcomic.ui.widget.*;
 import net.nkbits.epubcomic.utils.*;
@@ -61,9 +60,6 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 		protected Comic doInBackground(String... params) {
 			final String path = params[0];
 			Comic result = Comic.createComic(path);
-			if (result != null) {
-				HistoryManager.getInstance(ComicViewerActivity.this).remember(new File(path));
-			}
 			return result;
 		}
 		
@@ -776,22 +772,18 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 	private void loadComic(final String comicPath, final Intent intent) {
 		final File file = new File(comicPath);
 		int initialIndex = intent.getIntExtra(POSITION_EXTRA, 0);
-		if (initialIndex == 0) {
-			initialIndex = HistoryManager.getInstance(this).getBookmark(file);
-		}
 		loadComic(comicPath, initialIndex);
 	}
 	
 	private void loadComic(final String comicPath) {
 		final File file = new File(comicPath);
-		final int initialIndex = HistoryManager.getInstance(this).getBookmark(file);
-		loadComic(comicPath, initialIndex);
+//		final int initialIndex = HistoryManager.getInstance(this).getBookmark(file);
+//		loadComic(comicPath, initialIndex);
 	}
 	
 	private void loadComic(final String comicPath, final int initialIndex) {
 		final File file = new File(comicPath);
 		if (file.exists()) {
-
 			loadComicTask = new LoadComicTask();
 			loadComicTask.initialIndex = initialIndex;
 			loadComicTask.execute(comicPath);
@@ -1032,7 +1024,7 @@ public class ComicViewerActivity extends AppCompatActivity implements OnGestureL
 	public void onScreenChanged(int index) {
 		if(comic != null) {
 			final String path = comic.getPath();
-			HistoryManager.getInstance(this).setBookmark(new File(path), index);
+//			HistoryManager.getInstance(this).setBookmark(new File(path), index);
 		}
 	}
 }

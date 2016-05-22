@@ -15,7 +15,6 @@
  ******************************************************************************/
 package net.nkbits.epubcomic.ui.settings;
 
-import net.nkbits.epubcomic.db.HistoryManager;
 import android.app.Activity;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -40,7 +39,7 @@ public class CollectionSettingsHelper extends SettingsHelper {
 	}
 	
 	protected void clearHistory() {
-		HistoryManager.getInstance(this.getActivity()).clear();
+
 	}
 	
 }
