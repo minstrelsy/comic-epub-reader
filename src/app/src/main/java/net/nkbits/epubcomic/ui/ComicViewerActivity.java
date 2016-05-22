@@ -24,7 +24,7 @@ import net.androidcomics.acv.R;
 import net.nkbits.epubcomic.Constants;
 import net.nkbits.epubcomic.comic.Comic;
 import net.nkbits.epubcomic.logic.*;
-import net.nkbits.epubcomic.provider.HistoryManager;
+import net.nkbits.epubcomic.db.HistoryManager;
 import net.nkbits.epubcomic.ui.settings.tablet.SettingsActivityTablet;
 import net.nkbits.epubcomic.ui.widget.*;
 import net.nkbits.epubcomic.utils.*;

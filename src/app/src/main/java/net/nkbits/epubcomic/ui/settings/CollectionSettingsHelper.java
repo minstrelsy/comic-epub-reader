@@ -15,7 +15,7 @@
  ******************************************************************************/
 package net.nkbits.epubcomic.ui.settings;
 
-import net.nkbits.epubcomic.provider.HistoryManager;
+import net.nkbits.epubcomic.db.HistoryManager;
 import android.app.Activity;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
