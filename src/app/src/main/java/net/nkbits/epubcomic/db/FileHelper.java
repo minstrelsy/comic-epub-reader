@@ -23,12 +23,12 @@ public class FileHelper {
 
     public static final String FILES_TABLE_CREATE =
             "CREATE TABLE " + FILES_TABLE +" ( " +
-                    ID_COLUMN + " INTEGER PRIMARY KEY AUTO INCREMENT, " +
+                    ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PATH_COLUMN + " TEXT NOT NULL, " +
                     READ_COLUMN + " BOOLEAN NOT NULL DEFAULT 0, " +
                     ADDED_COLUMN + " DATE NOT NULL, " +
                     LAST_READ + " DATE NULL," +
-                    TYPE_COLUMN + " BOOLEAN NOT NULL" +
+                    TYPE_COLUMN + " BOOLEAN NOT NULL, " +
                     FAVORITE_COLUMN + " BOOLEAN NOT NULL DEFAULT 0)";
 
     private static final String INSERT_FILE =

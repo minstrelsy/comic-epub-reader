@@ -212,6 +212,8 @@ public class SDBrowserFragment extends Fragment {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
+            holder.icon.setImageResource(R.drawable.ic_folder);
+
 			if (supportedExtensions.containsKey(extension))
 				holder.icon.setImageResource(supportedExtensions.get(extension));
 

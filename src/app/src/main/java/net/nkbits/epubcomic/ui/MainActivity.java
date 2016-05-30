@@ -40,7 +40,6 @@ import android.widget.FrameLayout;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -119,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void finishThisFragment(Fragment fragment) {
         switch (drawerItemSelected) {
             case R.id.nav_add_file:
-                findViewById(R.id.action_import).setVisibility(View.GONE);
-                findViewById(R.id.action_select_all).setVisibility(View.GONE);
+                selectAllAction.setVisible(false);
+                importAction.setVisible(false);
                 break;
         }
     }
