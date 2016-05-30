@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onStop () {
-        dbHelper.deleteFiles();
+        dbHelper.file.deleteFiles();
         super.onStop();
     }
 
@@ -277,8 +277,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String ext = FileUtils.getFileExtension(file.getName());
             boolean isBook = Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase()) || Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase());
 
-            if(!dbHelper.existsFile(file.getPath()))
-                dbHelper.insertFile(file.getPath(), isBook);
+            if(!dbHelper.file.existsFile(file.getPath()))
+                dbHelper.file.insertFile(file.getPath(), isBook);
         }
     }
 }
