@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             String ext = FileUtils.getFileExtension(file.getName());
-            boolean isBook = Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase()) || Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase());
+            boolean isBook = Objects.equals(Constants.EPUB_EXTENSION, ext.toLowerCase()) || Objects.equals(Constants.PDF_EXTENSION, ext.toLowerCase());
 
             if(!dbHelper.file.existsFile(file.getPath()))
                 dbHelper.file.insertFile(file.getPath(), isBook);
