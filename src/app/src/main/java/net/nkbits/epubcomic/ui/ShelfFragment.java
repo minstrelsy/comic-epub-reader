@@ -15,8 +15,6 @@ import net.nkbits.epubcomic.view.ShelfView;
  * Activities that contain this fragment must implement the
  * {@link ShelfFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ShelfFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class ShelfFragment extends Fragment {
 
@@ -25,20 +23,6 @@ public class ShelfFragment extends Fragment {
 
     public ShelfFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ShelfFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ShelfFragment newInstance() {
-        ShelfFragment fragment = new ShelfFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

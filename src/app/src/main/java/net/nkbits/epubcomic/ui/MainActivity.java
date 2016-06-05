@@ -35,7 +35,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.FrameLayout;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -52,9 +51,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     protected SharedPreferences preferences;
     private ViewPager viewPager;
-    private FrameLayout frameLayout;
     private TabLayout tabLayout;
-    private Fragment sdBrowserFragment;
+    private Fragment currentFragment;
+    private SDBrowserFragment sdBrowserFragment;
+    private ShelfFragment shelfFragment;
+    private RecentlyAddedFragment recentlyAddedFragment;
+    private RecentReadsFragment recentReadsFragment;
     private MenuItem importAction;
     private MenuItem selectAllAction;
     private int drawerItemSelected;
@@ -73,13 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(1).select();
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,10 +84,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        frameLayout = (FrameLayout) findViewById(R.id.container);
-        frameLayout.setVisibility(FrameLayout.GONE);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(1).select();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        currentFragment = null;
+        shelfFragment = new ShelfFragment();
+        recentlyAddedFragment = new RecentlyAddedFragment();
+        recentReadsFragment = new RecentReadsFragment();
 
         dbHelper = new DBHelper(this);
     }
@@ -115,12 +118,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void finishThisFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+
         switch (drawerItemSelected) {
-            case R.id.nav_add_file:
+            case R.id.nav_add_file:{
                 selectAllAction.setVisible(false);
                 importAction.setVisible(false);
                 break;
+            }
         }
+
+        fragmentManager.beginTransaction().remove(fragment).commit();
+        viewPager.setVisibility(ViewPager.VISIBLE);
+        tabLayout.setVisibility(TabLayout.VISIBLE);
     }
 
     @Override
@@ -134,9 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new RecentReadsFragment(), "RECENT READS");
-        adapter.addFragment(new ShelfFragment(), "COMICS");
-        adapter.addFragment(new RecentlyAddedFragment(), "RECENTLY ADDED");
+        adapter.addFragment(recentReadsFragment, "RECENT READS");
+        adapter.addFragment(shelfFragment, "COMICS");
+        adapter.addFragment(recentlyAddedFragment, "RECENTLY ADDED");
         viewPager.setAdapter(adapter);
     }
 
@@ -147,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } if(drawerItemSelected == R.id.nav_add_file){
-            ((SDBrowserFragment) sdBrowserFragment).fragmentOnBackPressed();
+            sdBrowserFragment.fragmentOnBackPressed();
         } else {
             super.onBackPressed();
         }
@@ -165,34 +175,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         Fragment fragment = null;
         Bundle bundle = new Bundle();
+        FragmentManager fragmentManager = getFragmentManager();
 
         switch(item.getItemId()){
             case R.id.nav_my_books:
-                frameLayout.setVisibility(FrameLayout.GONE);
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
                 tabLayout.getTabAt(1).setText("BOOKS");
                 break;
             case R.id.nav_my_comics:
-                frameLayout.setVisibility(FrameLayout.GONE);
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
                 tabLayout.getTabAt(1).setText("COMICS");
                 break;
             case R.id.nav_favorites:
-                frameLayout.setVisibility(FrameLayout.GONE);
-                viewPager.setVisibility(ViewPager.VISIBLE);
-                tabLayout.setVisibility(TabLayout.VISIBLE);
+                viewPager.setVisibility(ViewPager.GONE);
+                tabLayout.setVisibility(TabLayout.GONE);
                 break;
             case R.id.nav_collections:
-                frameLayout.setVisibility(FrameLayout.GONE);
-                viewPager.setVisibility(ViewPager.VISIBLE);
-                tabLayout.setVisibility(TabLayout.VISIBLE);
+                viewPager.setVisibility(ViewPager.GONE);
+                tabLayout.setVisibility(TabLayout.GONE);
                 break;
             case R.id.nav_add_file:
                 viewPager.setVisibility(ViewPager.GONE);
                 tabLayout.setVisibility(TabLayout.GONE);
-                frameLayout.setVisibility(FrameLayout.VISIBLE);
 
                 sdBrowserFragment = new SDBrowserFragment();
                 String comicsPath = preferences.getString(Constants.COMICS_PATH_KEY, Environment.getExternalStorageDirectory().getAbsolutePath());
@@ -203,18 +209,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 selectAllAction.setVisible(true);
 
                 drawerItemSelected = R.id.nav_add_file;
+                currentFragment = sdBrowserFragment;
                 break;
             case R.id.nav_settings:
                 viewPager.setVisibility(ViewPager.GONE);
                 tabLayout.setVisibility(TabLayout.GONE);
-                frameLayout.setVisibility(FrameLayout.VISIBLE);
                 break;
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment).commit();
+        }else if(currentFragment != null){
+            fragmentManager.beginTransaction()
+                    .remove(currentFragment).commit();
+            currentFragment = null;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -229,10 +238,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.action_select_all:
                 selectAllAction.setVisible(false);
                 importAction.setVisible(true);
-                ((SDBrowserFragment) sdBrowserFragment).selectAll();
+                sdBrowserFragment.selectAll();
                 return true;
             case R.id.action_import:
-                ((SDBrowserFragment) sdBrowserFragment).importFiles();
+                sdBrowserFragment.importFiles();
                 return true;
         }
 

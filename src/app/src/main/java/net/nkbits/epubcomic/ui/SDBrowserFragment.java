@@ -17,7 +17,6 @@ package net.nkbits.epubcomic.ui;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import net.androidcomics.acv.R;
@@ -111,9 +110,7 @@ public class SDBrowserFragment extends Fragment {
     }
 
 	public void fragmentOnBackPressed() {
-        if(!browserBack(currentDirectory)){
-            setResultAndFinish(null);
-        }
+        browserBack(currentDirectory);
     }
 
     public void selectAll() {
