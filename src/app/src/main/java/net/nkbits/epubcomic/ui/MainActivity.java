@@ -19,7 +19,6 @@ import net.androidcomics.acv.R;
 import net.nkbits.epubcomic.Constants;
 import net.nkbits.epubcomic.adapter.ViewPagerAdapter;
 import net.nkbits.epubcomic.db.DBHelper;
-import net.nkbits.epubcomic.ui.settings.tablet.SettingsActivityTablet;
 import net.nkbits.epubcomic.utils.FileUtils;
 
 import android.app.Fragment;
@@ -172,11 +171,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 frameLayout.setVisibility(FrameLayout.GONE);
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
+                tabLayout.getTabAt(1).setText("BOOKS");
                 break;
             case R.id.nav_my_comics:
                 frameLayout.setVisibility(FrameLayout.GONE);
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
+                tabLayout.getTabAt(1).setText("COMICS");
                 break;
             case R.id.nav_favorites:
                 frameLayout.setVisibility(FrameLayout.GONE);
@@ -236,21 +237,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return false;
-    }
-
-    private void startSettingsActivity() {
-        Intent myIntent = new Intent(this, SettingsActivityTablet.class);
-        startActivityForResult(myIntent, Constants.SETTINGS_CODE);
-    }
-
-
-    private void shareApp() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_app_title));
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message));
-        Intent chooser = Intent.createChooser(intent, getString(R.string.item_share_app_title));
-        startActivity(chooser);
     }
 
     private void insertFiles(ArrayList<File> files){
