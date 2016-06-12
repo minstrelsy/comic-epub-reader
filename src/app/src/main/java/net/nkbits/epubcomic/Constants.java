@@ -26,7 +26,10 @@ public class Constants {
 	public static final String LOAD_LAST_KEY = "load_last";
 	public static final String VERSION_KEY = "version";
 	public static final String CLEAN_EXIT_KEY = "clean_exit";
-	public static final String BRIGHTNESS_KEY = "brightness";	
+	public static final String BRIGHTNESS_KEY = "brightness";
+
+	//Media Type
+	public static final String MEDIA_TYPE_KEY = "media_type";
 		
 	// Events
 	public static final String SINGLE_TAP_KEY = "single_tap";

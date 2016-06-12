@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        shelfFragment = new ShelfFragment();
+        shelfFragment = ShelfFragment.newInstance(FileHelper.COMIC);
         recentlyAddedFragment = new RecentlyAddedFragment();
         recentReadsFragment = new RecentReadsFragment();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentFragment = null;
 
         dbHelper = new DBHelper(this);
+        shelfFragment.setDBHelper(dbHelper);
     }
 
     @Override
