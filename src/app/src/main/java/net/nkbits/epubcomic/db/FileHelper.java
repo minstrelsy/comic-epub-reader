@@ -21,6 +21,9 @@ public class FileHelper {
     public static final String FAVORITE_COLUMN = "favorite";
     public static final String TYPE_COLUMN = "type";
 
+    public static final int BOOK = 0;
+    public static final int COMIC = 1;
+
     public static final String FILES_TABLE_CREATE =
             "CREATE TABLE " + FILES_TABLE +" ( " +
                     ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -70,7 +73,7 @@ public class FileHelper {
     public long insertFile(String path, boolean isBook) {
         insertQuery.bindString(1, path);
         insertQuery.bindLong(2, new Date().getTime());
-        insertQuery.bindLong(3, isBook ? 0:1);
+        insertQuery.bindLong(3, isBook ? BOOK:COMIC);
         return insertQuery.executeInsert();
     }
 
@@ -91,31 +94,34 @@ public class FileHelper {
         database.delete(FILES_TABLE, null, null);
     }
 
-    public String selectMostRecentFile() {
-        Cursor cursor = database.query(FILES_TABLE, new String[]{PATH_COLUMN},
-                null, null, null, null, LAST_READ + " desc", "1");
-
-        if (cursor.moveToFirst()) {
-            String file = cursor.getString(0);
-            cursor.close();
-            return file;
-        } else {
-            cursor.close();
-            return null;
-        }
+    public List<String> getAllBooks(){
+        return getAllBooks(ID_COLUMN);
     }
 
-    public List<String> getRecentFiles() {
-        ArrayList<String> files = new ArrayList<String>();
+    public List<String> getAllBooks(String orderBy) {
+        return getAll(orderBy, BOOK);
+    }
+
+    public List<String> getAllComics(){
+        return getAllComics(ID_COLUMN);
+    }
+
+    public List<String> getAllComics(String orderBy) {
+        return getAll(orderBy, COMIC);
+
+    }
+
+    private List<String> getAll(String orderBy, int type){
+        ArrayList<String> files = new ArrayList<>();
 
         Cursor cursor = database.query(FILES_TABLE, new String[]{PATH_COLUMN},
-                null, null, null, null, LAST_READ + " desc", "10");
+                TYPE_COLUMN + "=?", new String[]{Integer.toString(type)}, null, null, orderBy + " desc", null);
+
         if (cursor.moveToFirst()) {
             do {
                 String path = cursor.getString(0);
                 files.add(path);
             } while (cursor.moveToNext());
-
         }
 
         cursor.close();
