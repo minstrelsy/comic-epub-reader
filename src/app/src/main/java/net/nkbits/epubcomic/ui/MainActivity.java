@@ -19,6 +19,7 @@ import net.androidcomics.acv.R;
 import net.nkbits.epubcomic.Constants;
 import net.nkbits.epubcomic.adapter.ViewPagerAdapter;
 import net.nkbits.epubcomic.db.DBHelper;
+import net.nkbits.epubcomic.db.FileHelper;
 import net.nkbits.epubcomic.utils.FileUtils;
 
 import android.app.Fragment;
@@ -84,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        shelfFragment = new ShelfFragment();
+        recentlyAddedFragment = new RecentlyAddedFragment();
+        recentReadsFragment = new RecentReadsFragment();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -93,9 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         currentFragment = null;
-        shelfFragment = new ShelfFragment();
-        recentlyAddedFragment = new RecentlyAddedFragment();
-        recentReadsFragment = new RecentReadsFragment();
 
         dbHelper = new DBHelper(this);
     }
@@ -182,11 +183,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
                 tabLayout.getTabAt(1).setText("BOOKS");
+                shelfFragment.update(FileHelper.BOOK);
                 break;
             case R.id.nav_my_comics:
                 viewPager.setVisibility(ViewPager.VISIBLE);
                 tabLayout.setVisibility(TabLayout.VISIBLE);
                 tabLayout.getTabAt(1).setText("COMICS");
+                shelfFragment.update(FileHelper.COMIC);
                 break;
             case R.id.nav_favorites:
                 viewPager.setVisibility(ViewPager.GONE);
